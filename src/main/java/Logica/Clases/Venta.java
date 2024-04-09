@@ -1,4 +1,7 @@
-package Permanencia;
+package Logica.Clases;
+
+import Logica.Clases.DetalleVenta;
+import Logica.Clases.Proveedor;
 
 import java.util.Date;
 import java.util.List;

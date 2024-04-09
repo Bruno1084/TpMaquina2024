@@ -1,4 +1,4 @@
-package Controladores;
+package Logica.Controladores;
 
 public class CompraController {
 

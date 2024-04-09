@@ -1,6 +1,8 @@
-package Permanencia;
+package Logica.Clases;
 
-public class Proveedor extends Persona{
+import Logica.Clases.Persona;
+
+public class Proveedor extends Persona {
     private long cuil;
     private String ciudad;
 

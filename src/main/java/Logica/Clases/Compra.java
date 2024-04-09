@@ -1,4 +1,4 @@
-package Permanencia;
+package Logica.Clases;
 
 import java.util.Date;
 

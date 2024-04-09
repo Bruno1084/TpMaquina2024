@@ -1,8 +1,8 @@
-package Permanencia;
+package Logica.Clases;
 
 import java.util.Date;
 
-public class Empleado extends Persona{
+public class Empleado extends Persona {
     private int nroLegajo;
     private Date fechaIngreso;
 

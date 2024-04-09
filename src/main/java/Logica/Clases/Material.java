@@ -1,4 +1,4 @@
-package Permanencia;
+package Logica.Clases;
 
 public class Material {
     private String nombre;

@@ -1,4 +1,4 @@
-package Permanencia;
+package Logica.Clases;
 
 public abstract class Persona {
     private long dni;
