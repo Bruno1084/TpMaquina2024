@@ -3,6 +3,8 @@ package Logica.Clases;
 import java.util.Date;
 
 public class Compra {
+    public static int id = 0;
+    private int idCompra;
     private Date fecha;
     private Cliente cliente;
     private String pagada;
@@ -13,10 +15,17 @@ public class Compra {
         this.cliente = cliente;
         this.pagada = pagada;
         this.empleado = empleado;
+        this.idCompra = Compra.id++;
     }
-    public Compra(){}
+    public Compra(){
+        this.idCompra = Compra.id++;
+    }
 
     //Getters y setters
+    public int getId() {
+        return idCompra;
+    }
+
     public Date getFecha() {
         return fecha;
     }

@@ -19,6 +19,7 @@ public class GUI extends Application {
 
     public static void main(String []args){
         System.out.println("Hello world :D");
+
         launch();
     }
 }

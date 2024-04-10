@@ -13,153 +13,90 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <TabPane fx:id="mainTabPane" layoutX="115.0" layoutY="83.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-28.0">
-              <tabs>
                 <Tab fx:id="tab_Empleados" text="Untitled Tab 1">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="44.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tab-Empleados">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                  </content>
+                    <fx:include source="TabEmpleados.fxml" />
                 </Tab>
+
                 <Tab fx:id="tab_Proveedores" text="Untitled Tab 2">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="33.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tab-Proveedores">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                  </content>
+                    <fx:include source="TabProveedores.fxml" />
                 </Tab>
-                  <Tab fx:id="tab_Clientes" text="Untitled Tab">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="9.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tab-Clientes">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab fx:id="tab_Materiales" text="Untitled Tab">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="28.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tab-Materiales">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab fx:id="tab_Ventas" text="Untitled Tab">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="31.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tab-Ventas">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab fx:id="tab_Compras" text="Untitled Tab">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Text layoutX="29.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tab-Compras">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-              </tabs>
+
+                <Tab fx:id="tab_Clientes" text="Untitled Tab">
+                    <fx:include source="TabClientes.fxml" />
+                </Tab>
+
+                <Tab fx:id="tab_Materiales" text="Untitled Tab">
+                    <fx:include source="TabMateriales.fxml" />
+                </Tab>
+
+                <Tab fx:id="tab_Ventas" text="Untitled Tab">
+                    <fx:include source="TabVentas.fxml" />
+                </Tab>
+
+                <Tab fx:id="tab_Compras" text="Untitled Tab">
+                    <fx:include source="TabCompras.fxml" />
+                </Tab>
             </TabPane>
-         </children>
-      </AnchorPane>
-   </center>
-   <left>
-      <GridPane prefHeight="600.0" prefWidth="280.0" style="-fx-border-style: solid;" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="145.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
-            <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
-          <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
-            <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
-            <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
-            <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
-          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
+        </AnchorPane>
+    </center>
+    <left>
+        <GridPane prefHeight="600.0" prefWidth="280.0" style="-fx-border-style: solid;" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="145.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="65.0" minHeight="65.0" prefHeight="65.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+            </rowConstraints>
             <Button fx:id="btn_Empleados" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButtonEmpleados" prefWidth="280.0" text="Empleados" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-               <font>
-                  <Font size="20.0" />
-               </font>
+                <GridPane.margin>
+                    <Insets />
+                </GridPane.margin>
+                <font>
+                    <Font size="20.0" />
+                </font>
             </Button>
             <Button fx:id="btn_Proveedores" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButtonProveedores" text="Proveedores" GridPane.rowIndex="2">
-               <font>
-                  <Font size="20.0" />
-               </font>
+                <font>
+                    <Font size="20.0" />
+                </font>
             </Button>
             <Button fx:id="btn_Clientes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButtonClientes" text="Clientes" GridPane.rowIndex="3">
-               <font>
-                  <Font size="20.0" />
-               </font>
+                <font>
+                    <Font size="20.0" />
+                </font>
             </Button>
             <Button fx:id="btn_Materiales" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButtonMateriales" text="Materiales" GridPane.rowIndex="4">
-               <font>
-                  <Font size="20.0" />
-               </font>
+                <font>
+                    <Font size="20.0" />
+                </font>
             </Button>
             <Button fx:id="btn_Ventas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButtonVentas" text="Ventas" GridPane.rowIndex="5">
-               <font>
-                  <Font size="20.0" />
-               </font>
+                    <font>
+                    <Font size="20.0" />
+                    </font>
             </Button>
             <Button fx:id="btn_Compras" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleButtonCompras" text="Compras" GridPane.rowIndex="6">
-               <font>
-                  <Font size="20.0" />
-               </font>
+                <font>
+                    <Font size="20.0" />
+                </font>
             </Button>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Text layoutX="94.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recicladora.SA" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="90.8486328125" AnchorPane.topAnchor="64.0">
-                     <font>
+                <Text layoutX="94.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recicladora.SA" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="94.0" AnchorPane.rightAnchor="90.8486328125" AnchorPane.topAnchor="64.0">
+                    <font>
                         <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Text>
-               </children>
+                    </font>
+                </Text>
             </AnchorPane>
-         </children>
-      </GridPane>
-   </left>
+        </GridPane>
+    </left>
 </BorderPane>

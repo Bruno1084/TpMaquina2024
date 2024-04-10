@@ -4,7 +4,6 @@ import Logica.Clases.Empleado;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
 import java.util.Date;
 
 public class EmpleadoController {
@@ -23,9 +22,8 @@ public class EmpleadoController {
     @FXML
     private TableColumn<Date, Empleado> columnFechaIngreso;
 
+    public void initialize(){
 
-    
-
-
+    }
 
 }

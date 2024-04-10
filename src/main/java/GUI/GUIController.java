@@ -1,11 +1,18 @@
 package GUI;
 
-import javafx.event.ActionEvent;
+import Logica.Controladores.ClienteController;
+import Logica.Controladores.EmpleadoController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 
 public class GUIController {
+    @FXML
+    private EmpleadoController empleadoController;
+    @FXML
+    private ClienteController clienteController;
+
+
     @FXML
     private Button btn_Empleados;
     @FXML

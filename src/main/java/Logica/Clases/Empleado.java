@@ -3,6 +3,8 @@ package Logica.Clases;
 import java.util.Date;
 
 public class Empleado extends Persona {
+    public static int id = 0;
+    private int idEmpleado;
     private int nroLegajo;
     private Date fechaIngreso;
 
@@ -10,9 +12,17 @@ public class Empleado extends Persona {
         super(dni, nombre, direccion, telefono);
         this.nroLegajo = nroLegajo;
         this.fechaIngreso = fechaIngreso;
+        this.idEmpleado = Empleado.id++;
+    }
+    public Empleado(){
+        this.idEmpleado = Empleado.id++;
     }
 
     //Getters y setters
+    public int getIdE() {
+        return idEmpleado;
+    }
+
     public int getNroLegajo() {
         return nroLegajo;
     }

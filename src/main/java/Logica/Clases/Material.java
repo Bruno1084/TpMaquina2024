@@ -1,6 +1,8 @@
 package Logica.Clases;
 
 public class Material {
+    public static int id = 0;
+    private int idMaterial;
     private String nombre;
     private String descripcion;
     private String tipoMedida;
@@ -15,9 +17,18 @@ public class Material {
         this.stock = stock;
         this.precioCompra = precioCompra;
         this.precioVenta = precioCompra;
+        this.idMaterial = Material.id++;
+    }
+    public Material(){
+        this.idMaterial = Material.id++;
     }
 
     //Getters y setters
+
+    public int getId() {
+        return idMaterial;
+    }
+
     public String getNombre() {
         return nombre;
     }
