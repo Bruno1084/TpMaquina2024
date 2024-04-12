@@ -10,28 +10,28 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="paneEmpleados" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Logica.Controladores.EmpleadoController">
+<AnchorPane fx:id="paneEmpleados" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Logica.Controladores.EmpleadoController">
    <VBox alignment="CENTER" layoutX="191.0" layoutY="90.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <Pane prefHeight="200.0" prefWidth="200.0">
+      <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <Text layoutX="23.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empleado">
             <font>
                <Font name="System Bold" size="18.0" />
             </font></Text>
-         <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni:" />
-         <TextField layoutX="50.0" layoutY="63.0" />
-         <Text layoutX="312.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-         <TextField layoutX="366.0" layoutY="63.0" />
-         <Text layoutX="23.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" />
-         <TextField layoutX="82.0" layoutY="103.0" />
-         <Text layoutX="26.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
-         <TextField layoutX="379.0" layoutY="103.0" />
-         <Button fx:id="btnAniadir" layoutX="341.0" layoutY="168.0" mnemonicParsing="false" text="Añadir" />
-         <Button fx:id="btnEliminar" layoutX="411.0" layoutY="168.0" mnemonicParsing="false" text="Eliminar" />
-         <Button fx:id="btnEditar" layoutX="491.0" layoutY="168.0" mnemonicParsing="false" text="Editar" />
-         <TextField layoutX="82.0" layoutY="148.0" />
-         <Text layoutX="312.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nro Legajo:" />
-         <Text layoutX="312.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Ingreso:" />
-         <TextField layoutX="415.0" layoutY="136.0" prefHeight="25.0" prefWidth="119.0" />
+         <Text layoutX="31.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni:" />
+         <TextField layoutX="57.0" layoutY="84.0" />
+         <Text layoutX="325.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
+         <TextField layoutX="376.0" layoutY="84.0" />
+         <Text layoutX="31.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" />
+         <TextField layoutX="92.0" layoutY="149.0" />
+         <Text layoutX="33.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
+         <TextField layoutX="400.0" layoutY="148.0" />
+         <Button fx:id="btnAniadir" layoutX="556.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
+         <Button fx:id="btnEliminar" layoutX="617.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
+         <Button fx:id="btnEditar" layoutX="687.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+         <TextField layoutX="92.0" layoutY="209.0" />
+         <Text layoutX="325.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nro Legajo:" />
+         <Text layoutX="320.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Ingreso:" />
+         <TextField layoutX="420.0" layoutY="209.0" prefHeight="25.0" prefWidth="119.0" />
       </Pane>
       <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
