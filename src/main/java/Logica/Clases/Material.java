@@ -16,7 +16,7 @@ public class Material {
         this.tipoMedida = tipoMedida;
         this.stock = stock;
         this.precioCompra = precioCompra;
-        this.precioVenta = precioCompra;
+        this.precioVenta = precioVenta;
         this.idMaterial = Material.id++;
     }
     public Material(){
