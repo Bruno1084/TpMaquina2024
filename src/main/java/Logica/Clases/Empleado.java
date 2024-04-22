@@ -1,28 +1,20 @@
 package Logica.Clases;
 
-import java.util.Date;
 
 public class Empleado extends Persona {
-    public static int id = 0;
-    private int idEmpleado;
     private int nroLegajo;
-    private Date fechaIngreso;
+    private String fechaIngreso;
 
-    public Empleado(int dni, String nombre, String direccion, long telefono, int nroLegajo, Date fechaIngreso){
+
+    public Empleado(int dni, String nombre, String direccion, long telefono, int nroLegajo, String fechaIngreso){
         super(dni, nombre, direccion, telefono);
         this.nroLegajo = nroLegajo;
         this.fechaIngreso = fechaIngreso;
-        this.idEmpleado = Empleado.id++;
     }
-    public Empleado(){
-        this.idEmpleado = Empleado.id++;
-    }
+    public Empleado(){}
+
 
     //Getters y setters
-    public int getIdE() {
-        return idEmpleado;
-    }
-
     public int getNroLegajo() {
         return nroLegajo;
     }
@@ -30,10 +22,10 @@ public class Empleado extends Persona {
         this.nroLegajo = nroLegajo;
     }
 
-    public Date getFechaIngreso() {
+    public String getFechaIngreso() {
         return fechaIngreso;
     }
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(String fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 }

@@ -1,14 +1,10 @@
 package Logica.Clases;
 
-import Logica.Clases.DetalleVenta;
-import Logica.Clases.Proveedor;
-
 import java.util.Date;
 import java.util.List;
 
+
 public class Venta {
-    public static int id = 0;
-    private int idVenta;
     private Proveedor proveedor;
     private Date fechaVenta;
     List<DetalleVenta> materialesDetalle;
@@ -21,17 +17,10 @@ public class Venta {
         this.materialesDetalle = materialesDetalle;
         this.fecha = fecha;
         this.despachado = despachado;
-        this.idVenta = Venta.id++;
     }
-    public Venta(){
-        this.idVenta = Venta.id++;
-    }
+    public Venta(){}
 
     //Getters y setters
-    public int getId() {
-        return idVenta;
-    }
-
     public Proveedor getProveedor() {
         return proveedor;
     }

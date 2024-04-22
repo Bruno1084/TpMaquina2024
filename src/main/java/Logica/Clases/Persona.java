@@ -14,6 +14,7 @@ public abstract class Persona {
     }
     public Persona(){}
 
+
     //Getters y setters
     public long getDni() {
         return dni;

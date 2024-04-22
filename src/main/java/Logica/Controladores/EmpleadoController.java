@@ -1,6 +1,7 @@
 package Logica.Controladores;
 
 import Logica.Clases.Empleado;
+import Utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,6 +22,9 @@ public class EmpleadoController {
     private TableColumn<Integer, Empleado> columnNroLegajo;
     @FXML
     private TableColumn<Date, Empleado> columnFechaIngreso;
+
+    private FileManager fileManager = new FileManager("src/main/java/Permanencia/Empleado.txt", "Empleado");
+
 
     public void initialize(){
 
