@@ -1,14 +1,13 @@
 package Logica.Clases;
 
-import java.util.Date;
 
 public class Compra {
-    private Date fecha;
+    private String fecha;
     private Cliente cliente;
     private String pagada;
     private Empleado empleado;
 
-    public Compra(Date fecha, Cliente cliente, String pagada, Empleado empleado) {
+    public Compra(String fecha, Cliente cliente, String pagada, Empleado empleado) {
         this.fecha = fecha;
         this.cliente = cliente;
         this.pagada = pagada;
@@ -18,10 +17,10 @@ public class Compra {
 
 
     //Getters y setters
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

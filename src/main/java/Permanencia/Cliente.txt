@@ -1,0 +1,5 @@
+1, 00000001, Cliente1, Direccion1, 00000001
+2, 00000002, Cliente2, Dirección2, 00000002
+3, 00000003, Cliente3, Dirección3, 00000003
+4, 00000004, Cliente4, Dirección4, 00000004
+5, 00000005, Cliente5, Dirección5, 00000005

@@ -33,7 +33,7 @@
          <Text layoutX="320.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Ingreso:" />
          <TextField layoutX="420.0" layoutY="209.0" prefHeight="25.0" prefWidth="119.0" />
       </Pane>
-      <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <TableView fx:id="tableEmpleados" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="columnID" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="columnDni" prefWidth="75.0" text="Dni" />

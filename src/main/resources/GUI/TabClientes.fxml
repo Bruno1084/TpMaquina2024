@@ -29,7 +29,7 @@
             <Button fx:id="btnEliminar" layoutX="630.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
             <Button fx:id="btnEditar" layoutX="700.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
         </Pane>
-        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableClientes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="columnID" editable="false" text="ID" />
                 <TableColumn fx:id="columnDni" text="Dni" />

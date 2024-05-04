@@ -1,11 +1,14 @@
 package Logica.Controladores;
-
 import Logica.Clases.Empleado;
-import Utils.FileManager;
+import Utils.FileEmpleadoManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import java.util.Date;
+import javafx.scene.control.cell.PropertyValueFactory;
+import java.util.ArrayList;
+
 
 public class EmpleadoController {
     @FXML
@@ -21,13 +24,50 @@ public class EmpleadoController {
     @FXML
     private TableColumn<Integer, Empleado> columnNroLegajo;
     @FXML
-    private TableColumn<Date, Empleado> columnFechaIngreso;
+    private TableColumn<String, Empleado> columnFechaIngreso;
 
-    private FileManager fileManager = new FileManager("src/main/java/Permanencia/Empleado.txt", "Empleado");
-
+    private final FileEmpleadoManager fileEmpleadoManager = new FileEmpleadoManager("src/main/java/Permanencia/Empleado.txt", "Empleado");
+    private ArrayList<Empleado> listaEmpleados = new ArrayList<>();
+    private static int indice = 0;
 
     public void initialize(){
+        columnDni.setCellValueFactory(new PropertyValueFactory<>("Dni"));
+        columnNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        columnDireccion.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
+        columnTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
+        columnNroLegajo.setCellValueFactory(new PropertyValueFactory<>("NroLegajo"));
+        columnFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("NroLegajo"));
 
+        listaEmpleados = loadListaEmpleados();
+        tableEmpleados.setItems(loadTableEmpleados());
     }
+
+
+    public ArrayList<Empleado> loadListaEmpleados(){
+        ArrayList<Empleado> empleados;
+        empleados = fileEmpleadoManager.readAllLines();
+
+
+        return empleados;
+    }
+
+    public ObservableList<Empleado> loadTableEmpleados(){
+        ObservableList<Empleado> data = FXCollections.observableArrayList();
+
+        listaEmpleados.forEach(empleado -> {
+            long dni = empleado.getDni();
+            String nombre = empleado.getNombre();
+            String direccion = empleado.getDireccion();
+            long telefono = empleado.getTelefono();
+            int nroLegajo = empleado.getNroLegajo();
+            String fechaIngreso = empleado.getFechaIngreso();
+
+            Empleado newEmpleado = new Empleado(dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            data.add(newEmpleado);
+        });
+
+        return data;
+    }
+
 
 }

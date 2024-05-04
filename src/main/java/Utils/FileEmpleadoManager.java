@@ -1,21 +1,19 @@
 package Utils;
-
 import Logica.Clases.Empleado;
 import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileManager {
+public class FileEmpleadoManager {
     private String path;
     private String fileName;
     private File file;
     private FileReader fileReader;
     private FileWriter fileWriter;
     private BufferedReader bufferedReader;
-    private ArrayList<Empleado> listEmpleados = new ArrayList<>();
 
 
-    public FileManager(String path, String fileName){
+    public FileEmpleadoManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
 
@@ -81,20 +79,33 @@ public class FileManager {
         return arrayLine;
     }
 
-    public Empleado readLineAsObject(){
-        String[] arrFile = readLineAsArray();
-        int id = Integer.parseInt(arrFile[0]);
-        int dni = Integer.parseInt(arrFile[1]);
-        String nombre = arrFile[2];
-        String direccion = arrFile[3];
-        int telefono = Integer.parseInt(arrFile[4]);
-        int nroLegajo = Integer.parseInt(arrFile[5]);
-        String fechaIngreso = arrFile[6];
+    public ArrayList<Empleado> readAllLines(){
+        ArrayList<Empleado> data = new ArrayList<>();
+        String fileLine;
+        String [] splitLine;
 
-        Empleado empleado = new Empleado(dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
-        empleado.setId(id);
+        try {
+            fileLine = bufferedReader.readLine();
+            while (fileLine != null){
+                splitLine = fileLine.split(", ");
+                long dni = Long.parseLong(splitLine[1]);
+                String nombre = splitLine[2];
+                String direccion = splitLine[3];
+                long telefono = Long.parseLong(splitLine[4]);
+                int nroLegajo = Integer.parseInt(splitLine[5]);
+                String fechaIngreso = splitLine[6];
 
-        return empleado;
+                Empleado empleado = new Empleado(dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+                data.add(empleado);
+
+                fileLine = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return data;
     }
 
 
@@ -139,12 +150,5 @@ public class FileManager {
     }
     public void setBufferedReader(BufferedReader bufferedReader) {
         this.bufferedReader = bufferedReader;
-    }
-
-    public ArrayList<Empleado> getListEmpleados() {
-        return listEmpleados;
-    }
-    public void setListEmpleados(ArrayList<Empleado> listEmpleados) {
-        this.listEmpleados = listEmpleados;
     }
 }
