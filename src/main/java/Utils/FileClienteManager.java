@@ -90,12 +90,13 @@ public class FileClienteManager {
             fileLine = bufferedReader.readLine();
             while (fileLine != null){
                 splitLine = fileLine.split(", ");
+                int id = Integer.parseInt(splitLine[0]);
                 long dni = Long.parseLong(splitLine[1]);
                 String nombre = splitLine[2];
                 String direccion = splitLine[3];
                 long telefono = Long.parseLong(splitLine[4]);
 
-                Cliente cliente = new Cliente(dni, nombre, direccion, telefono);
+                Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono);
                 data.add(cliente);
 
                 fileLine = bufferedReader.readLine();

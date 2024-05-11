@@ -1,0 +1,5 @@
+1, 00000001, Proveedor1, Direccion1, 00000001, 0000000001, Ciudad1
+2, 00000002, Proveedor2, Direccion2, 00000002, 0000000002, Ciudad2
+3, 00000003, Proveedor3, Direccion3, 00000003, 0000000003, Ciudad3
+4, 00000004, Proveedor4, Direccion4, 00000004, 0000000004, Ciudad4
+5, 00000005, Proveedor5, Direccion5, 00000005, 0000000005, Ciudad5

@@ -5,8 +5,8 @@ public class Proveedor extends Persona {
     private long cuil;
     private String ciudad;
 
-    public Proveedor(long dni, String nombre, String direccion, long telefono, long cuil, String ciudad){
-        super(dni, nombre, direccion, telefono);
+    public Proveedor(int id, long dni, String nombre, String direccion, long telefono, long cuil, String ciudad){
+        super(id, dni, nombre, direccion, telefono);
         this.cuil = cuil;
         this.ciudad = ciudad;
     }

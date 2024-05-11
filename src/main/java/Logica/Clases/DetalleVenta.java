@@ -1,13 +1,13 @@
 package Logica.Clases;
 
 public class DetalleVenta {
-    private Material material;
+    private int idMaterial;
     private int cantidad;
     private long peso;
     private long precio;
 
-    public DetalleVenta(Material material, int cantidad, long peso, long precio) {
-        this.material = material;
+    public DetalleVenta(int idMaterial, int cantidad, long peso, long precio) {
+        this.idMaterial = idMaterial;
         this.cantidad = cantidad;
         this.peso = peso;
         this.precio = precio;
@@ -16,11 +16,11 @@ public class DetalleVenta {
 
 
     //Getters y setters
-    public Material getMaterial() {
-        return material;
+    public int getIdMaterial() {
+        return idMaterial;
     }
-    public void setMaterial(Material material) {
-        this.material = material;
+    public void setIdMaterial(int idMaterial) {
+        this.idMaterial = idMaterial;
     }
 
     public int getCantidad() {

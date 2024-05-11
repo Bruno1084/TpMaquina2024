@@ -33,7 +33,7 @@
          <Text layoutX="312.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" />
          <TextField layoutX="356.0" layoutY="217.0" prefHeight="25.0" prefWidth="140.0" />
         </Pane>
-        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableProveedores" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="columnID" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="columnDni" prefWidth="75.0" text="Dni" />

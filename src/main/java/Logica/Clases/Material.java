@@ -1,6 +1,7 @@
 package Logica.Clases;
 
 public class Material {
+    private int id;
     private String nombre;
     private String descripcion;
     private String tipoMedida;
@@ -8,7 +9,8 @@ public class Material {
     private float precioCompra;
     private float precioVenta;
 
-    public Material(String nombre, String descripcion, String tipoMedida, int stock, float precioCompra, float precioVenta){
+    public Material(int id, String nombre, String descripcion, String tipoMedida, int stock, float precioCompra, float precioVenta){
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.tipoMedida = tipoMedida;
@@ -20,6 +22,13 @@ public class Material {
 
 
     //Getters y setters
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombre() {
         return nombre;
     }

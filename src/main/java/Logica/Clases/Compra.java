@@ -2,21 +2,30 @@ package Logica.Clases;
 
 
 public class Compra {
+    private int id;
     private String fecha;
-    private Cliente cliente;
+    private int idCliente;
     private String pagada;
-    private Empleado empleado;
+    private int idEmpleado;
 
-    public Compra(String fecha, Cliente cliente, String pagada, Empleado empleado) {
+    public Compra(int id, String fecha, int idCliente, String pagada, int idEmpleado) {
+        this.id = id;
         this.fecha = fecha;
-        this.cliente = cliente;
+        this.idCliente = idCliente;
         this.pagada = pagada;
-        this.empleado = empleado;
+        this.idEmpleado = idEmpleado;
     }
     public Compra(){}
 
 
     //Getters y setters
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFecha() {
         return fecha;
     }
@@ -24,11 +33,11 @@ public class Compra {
         this.fecha = fecha;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getIdCliente() {
+        return idCliente;
     }
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getPagada() {
@@ -38,10 +47,10 @@ public class Compra {
         this.pagada = pagada;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public int getIdEmpleado() {
+        return idEmpleado;
     }
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 }

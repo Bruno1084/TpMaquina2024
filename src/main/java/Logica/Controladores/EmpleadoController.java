@@ -14,6 +14,8 @@ public class EmpleadoController {
     @FXML
     private TableView<Empleado> tableEmpleados;
     @FXML
+    private TableColumn<Integer, Empleado> columnID;
+    @FXML
     private TableColumn<Integer, Empleado> columnDni;
     @FXML
     private TableColumn<String, Empleado> columnNombre;
@@ -31,6 +33,7 @@ public class EmpleadoController {
     private static int indice = 0;
 
     public void initialize(){
+        columnID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         columnDni.setCellValueFactory(new PropertyValueFactory<>("Dni"));
         columnNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         columnDireccion.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
@@ -55,6 +58,7 @@ public class EmpleadoController {
         ObservableList<Empleado> data = FXCollections.observableArrayList();
 
         listaEmpleados.forEach(empleado -> {
+            int id = empleado.getId();
             long dni = empleado.getDni();
             String nombre = empleado.getNombre();
             String direccion = empleado.getDireccion();
@@ -62,7 +66,7 @@ public class EmpleadoController {
             int nroLegajo = empleado.getNroLegajo();
             String fechaIngreso = empleado.getFechaIngreso();
 
-            Empleado newEmpleado = new Empleado(dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            Empleado newEmpleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
             data.add(newEmpleado);
         });
 

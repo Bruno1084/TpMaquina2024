@@ -1,10 +1,11 @@
 package Utils;
-import Logica.Clases.Empleado;
+import Logica.Clases.Cliente;
+import Logica.Clases.Proveedor;
 import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileEmpleadoManager {
+public class FileProveedorManager {
     private String path;
     private String fileName;
     private File file;
@@ -13,7 +14,7 @@ public class FileEmpleadoManager {
     private BufferedReader bufferedReader;
 
 
-    public FileEmpleadoManager(String path, String fileName){
+    public FileProveedorManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
 
@@ -79,8 +80,8 @@ public class FileEmpleadoManager {
         return arrayLine;
     }
 
-    public ArrayList<Empleado> readAllLines(){
-        ArrayList<Empleado> data = new ArrayList<>();
+    public ArrayList<Proveedor> readAllLines(){
+        ArrayList<Proveedor> data = new ArrayList<>();
         String fileLine;
         String [] splitLine;
 
@@ -93,11 +94,11 @@ public class FileEmpleadoManager {
                 String nombre = splitLine[2];
                 String direccion = splitLine[3];
                 long telefono = Long.parseLong(splitLine[4]);
-                int nroLegajo = Integer.parseInt(splitLine[5]);
-                String fechaIngreso = splitLine[6];
+                long cuil = Long.parseLong(splitLine[5]);
+                String ciudad = splitLine[6];
 
-                Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
-                data.add(empleado);
+                Proveedor proveedor = new Proveedor(id, dni, nombre, direccion, telefono, cuil, ciudad);
+                data.add(proveedor);
 
                 fileLine = bufferedReader.readLine();
             }

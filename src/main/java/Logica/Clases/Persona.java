@@ -1,12 +1,14 @@
 package Logica.Clases;
 
 public abstract class Persona {
+    private int id;
     private long dni;
     private String nombre;
     private String direccion;
     private long telefono;
 
-    public Persona(long dni, String nombre, String direccion, long telefono) {
+    public Persona(int id,long dni, String nombre, String direccion, long telefono) {
+        this.id = id;
         this.dni = dni;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -16,6 +18,13 @@ public abstract class Persona {
 
 
     //Getters y setters
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public long getDni() {
         return dni;
     }

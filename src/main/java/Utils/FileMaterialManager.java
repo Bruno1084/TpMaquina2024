@@ -1,10 +1,10 @@
 package Utils;
-import Logica.Clases.Empleado;
+import Logica.Clases.Material;
 import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileEmpleadoManager {
+public class FileMaterialManager {
     private String path;
     private String fileName;
     private File file;
@@ -13,7 +13,7 @@ public class FileEmpleadoManager {
     private BufferedReader bufferedReader;
 
 
-    public FileEmpleadoManager(String path, String fileName){
+    public FileMaterialManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
 
@@ -79,8 +79,8 @@ public class FileEmpleadoManager {
         return arrayLine;
     }
 
-    public ArrayList<Empleado> readAllLines(){
-        ArrayList<Empleado> data = new ArrayList<>();
+    public ArrayList<Material> readAllLines(){
+        ArrayList<Material> data = new ArrayList<>();
         String fileLine;
         String [] splitLine;
 
@@ -89,15 +89,15 @@ public class FileEmpleadoManager {
             while (fileLine != null){
                 splitLine = fileLine.split(", ");
                 int id = Integer.parseInt(splitLine[0]);
-                long dni = Long.parseLong(splitLine[1]);
-                String nombre = splitLine[2];
-                String direccion = splitLine[3];
-                long telefono = Long.parseLong(splitLine[4]);
-                int nroLegajo = Integer.parseInt(splitLine[5]);
-                String fechaIngreso = splitLine[6];
+                String nombre = splitLine[1];
+                String descripcion = splitLine[2];
+                String tipoMedida = splitLine[3];
+                int stock = Integer.parseInt(splitLine[4]);
+                float precioCompra = Float.parseFloat(splitLine[5]);
+                float precioVenta = Float.parseFloat(splitLine[6]);
 
-                Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
-                data.add(empleado);
+                Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
+                data.add(material);
 
                 fileLine = bufferedReader.readLine();
             }

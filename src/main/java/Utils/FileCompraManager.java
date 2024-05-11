@@ -1,10 +1,10 @@
 package Utils;
-import Logica.Clases.Empleado;
+import Logica.Clases.Compra;
 import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileEmpleadoManager {
+public class FileCompraManager {
     private String path;
     private String fileName;
     private File file;
@@ -13,7 +13,7 @@ public class FileEmpleadoManager {
     private BufferedReader bufferedReader;
 
 
-    public FileEmpleadoManager(String path, String fileName){
+    public FileCompraManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
 
@@ -79,8 +79,8 @@ public class FileEmpleadoManager {
         return arrayLine;
     }
 
-    public ArrayList<Empleado> readAllLines(){
-        ArrayList<Empleado> data = new ArrayList<>();
+    public ArrayList<Compra> readAllLines(){
+        ArrayList<Compra> data = new ArrayList<>();
         String fileLine;
         String [] splitLine;
 
@@ -89,15 +89,13 @@ public class FileEmpleadoManager {
             while (fileLine != null){
                 splitLine = fileLine.split(", ");
                 int id = Integer.parseInt(splitLine[0]);
-                long dni = Long.parseLong(splitLine[1]);
-                String nombre = splitLine[2];
-                String direccion = splitLine[3];
-                long telefono = Long.parseLong(splitLine[4]);
-                int nroLegajo = Integer.parseInt(splitLine[5]);
-                String fechaIngreso = splitLine[6];
+                String fecha = splitLine[1];
+                int clienteId = Integer.parseInt(splitLine[2]);
+                String pagado = splitLine[3];
+                int empleadoId = Integer.parseInt(splitLine[4]);
 
-                Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
-                data.add(empleado);
+                Compra compra = new Compra(id, fecha, clienteId, pagado, empleadoId);
+                data.add(compra);
 
                 fileLine = bufferedReader.readLine();
             }

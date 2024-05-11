@@ -1,9 +1,7 @@
 package Logica.Controladores;
-
 import Logica.Clases.Cliente;
 import Logica.Clases.Empleado;
 import Utils.FileClienteManager;
-import Utils.FileEmpleadoManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,15 +15,15 @@ public class ClienteController {
     @FXML
     private TableView<Cliente> tableClientes;
     @FXML
-    private TableColumn<Integer, Empleado> columnID;
+    private TableColumn<Integer, Cliente> columnID;
     @FXML
-    private TableColumn<Integer, Empleado> columnDni;
+    private TableColumn<Integer, Cliente> columnDni;
     @FXML
-    private TableColumn<String, Empleado> columnNombre;
+    private TableColumn<String, Cliente> columnNombre;
     @FXML
-    private TableColumn<String, Empleado> columnDireccion;
+    private TableColumn<String, Cliente> columnDireccion;
     @FXML
-    private TableColumn<Long, Empleado> columnTelefono;
+    private TableColumn<Long, Cliente> columnTelefono;
 
     private final FileClienteManager fileClienteManager = new FileClienteManager("src/main/java/Permanencia/Cliente.txt", "Cliente");
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
@@ -33,6 +31,7 @@ public class ClienteController {
 
 
     public void initialize(){
+        columnID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         columnDni.setCellValueFactory(new PropertyValueFactory<>("Dni"));
         columnNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         columnDireccion.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
@@ -53,12 +52,13 @@ public class ClienteController {
         ObservableList<Cliente> data = FXCollections.observableArrayList();
 
         listaClientes.forEach(cliente -> {
+            int id = cliente.getId();
             long dni = cliente.getDni();
             String nombre = cliente.getNombre();
             String direccion = cliente.getDireccion();
             long telefono = cliente.getTelefono();
 
-            Cliente newCliente = new Cliente(dni, nombre, direccion, telefono);
+            Cliente newCliente = new Cliente(id, dni, nombre, direccion, telefono);
             data.add(newCliente);
         });
 
