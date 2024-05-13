@@ -1,9 +1,9 @@
 package Logica.Controladores;
-
 import Logica.Clases.DetalleVenta;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
 
 public class DetalleVentaController {
     @FXML

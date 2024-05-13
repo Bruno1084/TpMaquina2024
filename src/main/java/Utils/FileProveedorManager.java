@@ -1,5 +1,4 @@
 package Utils;
-import Logica.Clases.Cliente;
 import Logica.Clases.Proveedor;
 import java.io.*;
 import java.util.ArrayList;

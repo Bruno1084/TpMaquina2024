@@ -29,13 +29,12 @@
             <Button fx:id="btnEliminar" layoutX="637.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
             <Button fx:id="btnEditar" layoutX="714.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
         </Pane>
-        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableVentas" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="columnID" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="columnProveedor" prefWidth="75.0" text="Proveedor" />
+                <TableColumn fx:id="columnIdProveedor" prefWidth="75.0" text="Proveedor" />
             <TableColumn fx:id="columnFechaVenta" prefWidth="75.0" text="Fecha de Venta" />
-            <TableColumn fx:id="columnDetalle" prefWidth="75.0" text="Detalle" />
-            <TableColumn fx:id="columnFecha" prefWidth="75.0" text="Fecha" />
+            <TableColumn fx:id="columnDetalleVenta" prefWidth="75.0" text="Detalle" />
             <TableColumn fx:id="columnDespachado" prefWidth="75.0" text="Despachado" />
             </columns>
          <columnResizePolicy>

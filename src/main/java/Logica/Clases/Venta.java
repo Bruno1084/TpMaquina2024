@@ -1,37 +1,41 @@
 package Logica.Clases;
-
-import java.util.Date;
 import java.util.List;
 
 
 public class Venta {
-    private Proveedor proveedor;
-    private Date fechaVenta;
+    private int idVenta;
+    private int idProveedor;
+    private String fechaVenta;
     List<DetalleVenta> materialesDetalle;
-    private Date fecha;
     private boolean despachado;
 
-    public Venta(Proveedor proveedor, Date fechaVenta, List<DetalleVenta> materialesDetalle, Date fecha, boolean despachado) {
-        this.proveedor = proveedor;
+    public Venta(int idVenta, int idProveedor, String fechaVenta, boolean despachado) {
+        this.idVenta = idVenta;
+        this.idProveedor = idProveedor;
         this.fechaVenta = fechaVenta;
-        this.materialesDetalle = materialesDetalle;
-        this.fecha = fecha;
         this.despachado = despachado;
     }
     public Venta(){}
 
     //Getters y setters
-    public Proveedor getProveedor() {
-        return proveedor;
+    public int getIdVenta() {
+        return idVenta;
     }
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
     }
 
-    public Date getFechaVenta() {
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public String getFechaVenta() {
         return fechaVenta;
     }
-    public void setFechaVenta(Date fechaVenta) {
+    public void setFechaVenta(String fechaVenta) {
         this.fechaVenta = fechaVenta;
     }
 
@@ -40,13 +44,6 @@ public class Venta {
     }
     public void setMaterialesDetalle(List<DetalleVenta> materialesDetalle) {
         this.materialesDetalle = materialesDetalle;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public boolean isDespachado() {

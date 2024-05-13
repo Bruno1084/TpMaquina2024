@@ -1,5 +1,6 @@
 package Logica.Clases;
 
+
 public class DetalleVenta {
     private int idMaterial;
     private int cantidad;
