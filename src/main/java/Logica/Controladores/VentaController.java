@@ -1,5 +1,6 @@
 package Logica.Controladores;
 import Logica.Clases.Venta;
+import Logica.Controladores.ModalControladores.ModalVentaController;
 import Utils.FileVentaManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,51 +43,34 @@ public class VentaController {
         columnDespachado.setCellValueFactory(new PropertyValueFactory<>("Despachado"));
 
         //Don't touch
-//        columnDetalleVenta.setCellValueFactory(param -> {
-//            final TableCell<Venta, String> cell = new TableCell<>(){
-//
-//                @Override
-//                public void updateItem(String item, boolean empty){
-//                    super.updateItem(item, empty);
-//
-//                    if(empty){
-//                        setGraphic(null);
-//                        setText(null);
-//                    }else{
-//                        final Button detalleButton = new Button("Detalle");
-//                        detalleButton.setOnAction(event -> {
-//                            Venta venta = getTableView().getItems().get(getIndex());
-//                            handleDetalleButton(venta);
-//                        });
-//                        setGraphic(detalleButton);
-//                        setText(null);
-//                    }
-//                }
-//            };
-//            return cell;
-//        });
+        columnDetalleVenta.setCellFactory(param -> {
+            final TableCell<Venta, String> cell = new TableCell<>(){
+
+                @Override
+                public void updateItem(String item, boolean empty){
+                    super.updateItem(item, empty);
+
+                    if(empty){
+                        setGraphic(null);
+                        setText(null);
+                    }else{
+                        final Button detalleButton = new Button("Detalle");
+                        detalleButton.setOnAction(event -> {
+                            Venta venta = getTableView().getItems().get(getIndex());
+                            handleDetalleButton(venta);
+                        });
+                        setGraphic(detalleButton);
+                        setText(null);
+                    }
+                }
+            };
+            return cell;
+        });
 
         listaVentas = loadListaVentas();
         tableVentas.setItems(loadTableVentas());
     }
 
-
-    public void handleDetalleButton(Venta venta){
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Modals/modalDetalleVenta.fxml"));
-            Stage secondStage = new Stage();
-            secondStage.setScene(new Scene(fxmlLoader.load()));
-
-            ModalVentaController controller = fxmlLoader.getController();
-            controller.loadVenta(venta);
-            controller.setControladorPadre(this);
-            fxmlLoader.setController(controller);
-            secondStage.setResizable(false);
-            secondStage.show();
-        }catch (IOException exception){
-            exception.printStackTrace();
-        }
-    }
 
     public ArrayList<Venta> loadListaVentas(){
         ArrayList<Venta> data;
@@ -111,4 +95,21 @@ public class VentaController {
         return data;
     }
 
+    public void handleDetalleButton(Venta venta){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/ModalControladores/modalDetalleVenta.fxml"));
+            Stage secondStage = new Stage();
+            secondStage.setScene(new Scene(fxmlLoader.load()));
+
+            ModalVentaController controller = fxmlLoader.getController();
+            controller.setVenta(venta);
+
+            //fxmlLoader.setController(controller);
+            secondStage.setResizable(false);
+            secondStage.show();
+        }catch (IOException exception){
+            System.out.println("Error path is incorrect");
+            exception.printStackTrace();
+        }
+    }
 }

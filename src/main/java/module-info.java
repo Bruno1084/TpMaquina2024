@@ -7,4 +7,7 @@ module org.example.tpmaquina2024_javafx {
 
     opens Logica.Controladores to javafx.fxml;
     opens Logica.Clases to javafx.base;
+
+    opens Logica.Controladores.ModalControladores to javafx.fxml;
+    exports Logica.Controladores.ModalControladores to javafx.fxml;
 }
