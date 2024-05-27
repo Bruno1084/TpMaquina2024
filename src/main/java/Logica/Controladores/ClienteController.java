@@ -25,7 +25,7 @@ public class ClienteController {
     @FXML
     private TableColumn<Long, Cliente> columnTelefono;
 
-    private final FileClienteManager fileClienteManager = new FileClienteManager("src/main/java/Permanencia/Cliente.txt", "Cliente");
+    private final FileClienteManager fileClienteManager = new FileClienteManager("src/main/java/Permanencia/", "Cliente.txt");
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
     private static int indice = 0;
 

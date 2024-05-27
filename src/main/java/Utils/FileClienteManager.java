@@ -1,10 +1,8 @@
 package Utils;
-
 import Logica.Clases.Cliente;
-import Logica.Clases.Empleado;
-
 import java.io.*;
 import java.util.ArrayList;
+
 
 public class FileClienteManager {
     private String path;
@@ -26,7 +24,7 @@ public class FileClienteManager {
     }
 
     public void createFile(){
-        this.file = new File(path);
+        this.file = new File(path, fileName);
     }
 
     public void createFileReader(){

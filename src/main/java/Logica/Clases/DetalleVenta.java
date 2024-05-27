@@ -2,12 +2,14 @@ package Logica.Clases;
 
 
 public class DetalleVenta {
+    public int idDetalleVenta;
     private int idMaterial;
     private int cantidad;
     private long peso;
     private long precio;
 
-    public DetalleVenta(int idMaterial, int cantidad, long peso, long precio) {
+    public DetalleVenta(int idDetalleVenta, int idMaterial, int cantidad, long peso, long precio) {
+        this.idDetalleVenta = idDetalleVenta;
         this.idMaterial = idMaterial;
         this.cantidad = cantidad;
         this.peso = peso;
@@ -17,6 +19,13 @@ public class DetalleVenta {
 
 
     //Getters y setters
+    public int getIdDetalleVenta() {
+        return idDetalleVenta;
+    }
+    public void setIdDetalleVenta(int idDetalleVenta) {
+        this.idDetalleVenta = idDetalleVenta;
+    }
+
     public int getIdMaterial() {
         return idMaterial;
     }
@@ -43,6 +52,11 @@ public class DetalleVenta {
     }
     public void setPrecio(long precio) {
         this.precio = precio;
+    }
+
+    @Override
+    public String toString(){
+        return "idDetalleVenta: "+ idDetalleVenta +" idMaterial: " + idMaterial +" cantidad: "+ cantidad +" peso: "+ peso +" precio: "+ precio;
     }
 }
 

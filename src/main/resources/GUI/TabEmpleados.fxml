@@ -25,9 +25,9 @@
          <TextField layoutX="92.0" layoutY="149.0" />
          <Text layoutX="33.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
          <TextField layoutX="400.0" layoutY="148.0" />
-         <Button fx:id="btnAniadir" layoutX="556.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-         <Button fx:id="btnEliminar" layoutX="617.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-         <Button fx:id="btnEditar" layoutX="687.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+         <Button fx:id="btnAniadir" layoutX="16.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
+         <Button fx:id="btnEliminar" layoutX="77.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
+         <Button fx:id="btnEditar" layoutX="143.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
          <TextField layoutX="92.0" layoutY="209.0" />
          <Text layoutX="325.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nro Legajo:" />
          <Text layoutX="320.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Ingreso:" />

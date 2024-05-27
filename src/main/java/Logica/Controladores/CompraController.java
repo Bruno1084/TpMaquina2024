@@ -1,7 +1,5 @@
 package Logica.Controladores;
-import Logica.Clases.Cliente;
 import Logica.Clases.Compra;
-import Logica.Clases.Empleado;
 import Utils.FileCompraManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +24,7 @@ public class CompraController {
     @FXML
     TableColumn<Integer, Compra> columnEmpleado;
 
-    private final FileCompraManager fileCompraManager = new FileCompraManager("src/main/java/Permanencia/Compra.txt", "Compra");
+    private final FileCompraManager fileCompraManager = new FileCompraManager("src/main/java/Permanencia/", "Compra.txt");
     private ArrayList<Compra> listaCompras = new ArrayList<>();
     private static int indice = 0;
 

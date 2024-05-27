@@ -1,10 +1,10 @@
 package Utils;
-import Logica.Clases.Compra;
+import Logica.Clases.DetalleVenta;
 import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileCompraManager {
+public class FileDetalleVentaManager {
     private String path;
     private String fileName;
     private File file;
@@ -13,7 +13,7 @@ public class FileCompraManager {
     private BufferedReader bufferedReader;
 
 
-    public FileCompraManager(String path, String fileName){
+    public FileDetalleVentaManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
 
@@ -22,6 +22,7 @@ public class FileCompraManager {
         createFileWriter();
         createBufferedReader();
     }
+
 
     public void createFile(){
         this.file = new File(path, fileName);
@@ -79,23 +80,32 @@ public class FileCompraManager {
         return arrayLine;
     }
 
-    public ArrayList<Compra> readAllLines(){
-        ArrayList<Compra> data = new ArrayList<>();
+    public ArrayList<DetalleVenta> readAllLines(){
+        ArrayList<DetalleVenta> data = new ArrayList<>();
         String fileLine;
         String [] splitLine;
 
         try {
             fileLine = bufferedReader.readLine();
             while (fileLine != null){
-                splitLine = fileLine.split(", ");
-                int id = Integer.parseInt(splitLine[0]);
-                String fecha = splitLine[1];
-                int clienteId = Integer.parseInt(splitLine[2]);
-                String pagado = splitLine[3];
-                int empleadoId = Integer.parseInt(splitLine[4]);
+                if(fileLine.contains("{")){
+                    fileLine = bufferedReader.readLine();
+                    if (fileLine.contains("}")){
+                        continue;
+                    }else {
+                        splitLine= fileLine.split(" ,");
+                        int idDetalleVenta = Integer.parseInt(splitLine[0]);
+                        int idMaterial = Integer.parseInt(splitLine[1]);
+                        int cantidad = Integer.parseInt(splitLine[2]);
+                        Long peso = Long.parseLong(splitLine[3]);
+                        Long precio = Long.parseLong(splitLine[4]);
 
-                Compra compra = new Compra(id, fecha, clienteId, pagado, empleadoId);
-                data.add(compra);
+                        DetalleVenta detalleVenta = new DetalleVenta(idDetalleVenta, idMaterial, cantidad, peso, precio);
+                        data.add(detalleVenta);
+                    }
+                }
+
+
 
                 fileLine = bufferedReader.readLine();
             }
@@ -105,6 +115,26 @@ public class FileCompraManager {
         }
 
         return data;
+    }
+
+    public void searchGroupOfDetails(int id){
+        /*Binary Search Implementation
+           binarySeach(arr, target){
+            int l = 0;
+            int m = arr.length() -1;
+
+            while(l <= m){
+                int mid = Math.floor((l + r)/2);
+
+                if(arr[mid] == target){ return mid };
+                else if(arr[mid] < target){
+                    l = midd +1;
+                }else{
+                    r = midd -1;
+                }
+            }
+            return l;
+        * */
     }
 
 

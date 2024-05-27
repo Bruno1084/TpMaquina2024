@@ -25,9 +25,9 @@
             <TextField layoutX="73.0" layoutY="138.0" prefHeight="25.0" prefWidth="117.0" />
             <Text layoutX="312.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Empleado:" />
             <TextField layoutX="420.0" layoutY="137.0" />
-            <Button fx:id="btnAniadir" layoutX="569.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="633.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="706.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+            <Button fx:id="btnAniadir" layoutX="19.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
+            <Button fx:id="btnEliminar" layoutX="80.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
+            <Button fx:id="btnEditar" layoutX="151.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
         </Pane>
         <TableView fx:id="tableCompras" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>

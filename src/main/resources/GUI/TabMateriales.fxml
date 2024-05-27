@@ -24,9 +24,9 @@
             <TextField layoutX="443.0" layoutY="76.0" />
             <Text layoutX="23.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock:" />
             <TextField layoutX="58.0" layoutY="137.0" prefHeight="25.0" prefWidth="117.0" />
-            <Button fx:id="btnAniadir" layoutX="565.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="633.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="709.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+            <Button fx:id="btnAniadir" layoutX="499.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
+            <Button fx:id="btnEliminar" layoutX="562.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
+            <Button fx:id="btnEditar" layoutX="631.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
          <Text layoutX="394.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio de Compra:" />
          <Text layoutX="400.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio de Venta:" />
          <TextField layoutX="491.0" layoutY="205.0" prefHeight="25.0" prefWidth="117.0" />
