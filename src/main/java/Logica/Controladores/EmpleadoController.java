@@ -4,30 +4,56 @@ import Utils.FileEmpleadoManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 
 
 public class EmpleadoController {
+    // Table columns and view
     @FXML
     private TableView<Empleado> tableEmpleados;
     @FXML
-    private TableColumn<Integer, Empleado> columnID;
+    private TableColumn<Empleado, Integer> columnID;
     @FXML
-    private TableColumn<Integer, Empleado> columnDni;
+    private TableColumn<Empleado, Integer> columnDni;
     @FXML
-    private TableColumn<String, Empleado> columnNombre;
+    private TableColumn<Empleado, String> columnNombre;
     @FXML
-    private TableColumn<String, Empleado> columnDireccion;
+    private TableColumn<Empleado, String> columnDireccion;
     @FXML
-    private TableColumn<Long, Empleado> columnTelefono;
+    private TableColumn<Empleado, Long> columnTelefono;
     @FXML
-    private TableColumn<Integer, Empleado> columnNroLegajo;
+    private TableColumn<Empleado, Integer> columnNroLegajo;
     @FXML
-    private TableColumn<String, Empleado> columnFechaIngreso;
+    private TableColumn<Empleado, String> columnFechaIngreso;
 
+    // Form inputs
+    @FXML
+    private TextField inputDNI;
+    @FXML
+    private TextField inputNombre;
+    @FXML
+    private TextField inputDireccion;
+    @FXML
+    private TextField inputNroLegajo;
+    @FXML
+    private TextField inputTelefono;
+    @FXML
+    private TextField inputFechaIngreso;
+
+    // Tab buttons
+    @FXML
+    private Button btnAniadir;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Button btnEditar;
+
+    // Other things
     private final FileEmpleadoManager fileEmpleadoManager = new FileEmpleadoManager("src/main/java/Permanencia/Empleado.txt", "Empleado");
     private ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     private static int indice = 0;
@@ -39,10 +65,23 @@ public class EmpleadoController {
         columnDireccion.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
         columnTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
         columnNroLegajo.setCellValueFactory(new PropertyValueFactory<>("NroLegajo"));
-        columnFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("NroLegajo"));
+        columnFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("FechaIngreso"));
 
         listaEmpleados = loadListaEmpleados();
         tableEmpleados.setItems(loadTableEmpleados());
+
+        tableEmpleados.setOnMouseClicked(event ->{
+            if(!tableEmpleados.getSelectionModel().isEmpty()){
+                Empleado empleado = tableEmpleados.getSelectionModel().getSelectedItem();
+                inputDNI.setText(String.valueOf(empleado.getDni()));
+                inputNombre.setText(empleado.getNombre());
+                inputDireccion.setText(empleado.getDireccion());
+                inputTelefono.setText(String.valueOf(empleado.getTelefono()));
+                inputNroLegajo.setText(String.valueOf(empleado.getNroLegajo()));
+                inputFechaIngreso.setText(empleado.getFechaIngreso());
+                indice = empleado.getId();
+            }
+        });
     }
 
 
@@ -73,5 +112,69 @@ public class EmpleadoController {
         return data;
     }
 
+    public Empleado getLastEmpleado(){
+        return listaEmpleados.get(listaEmpleados.size() -1);
+    }
 
+    public void clearInputs(){
+        inputDNI.setText("");
+        inputNombre.setText("");
+        inputDireccion.setText("");
+        inputTelefono.setText("");
+        inputNroLegajo.setText("");
+        inputFechaIngreso.setText("");
+    }
+
+    public boolean checkInputs(){
+        if(inputDNI.getText().isEmpty() || inputNombre.getText().isEmpty() ||
+                inputDireccion.getText().isEmpty() || inputTelefono.getText().isEmpty() ||
+                inputNroLegajo.getText().isEmpty() || inputFechaIngreso.getText().isEmpty()) {
+            System.out.println("There is an empty input");
+            return false;
+        }
+        return true;
+    }
+
+    @FXML
+    public void handleBtnAniadir(){
+        if (checkInputs()){
+            long dni = Long.parseLong(inputDNI.getText());
+            String nombre = inputNombre.getText();
+            String direccion = inputDireccion.getText();
+            long telefono = Long.parseLong(inputTelefono.getText());
+            int nroLegajo = Integer.parseInt(inputNroLegajo.getText());
+            String fechaIngreso = inputFechaIngreso.getText();
+            int id = listaEmpleados.isEmpty() ? 1 : listaEmpleados.get(listaEmpleados.size() - 1).getId() + 1;
+
+            Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            listaEmpleados.add(empleado);
+            fileEmpleadoManager.writeLine(empleado);
+
+            tableEmpleados.setItems(loadTableEmpleados());
+            clearInputs();
+        }
+    }
+
+    @FXML
+    public void handleBtnEditar(){
+        if (checkInputs()){
+            long dni = Long.parseLong(inputDNI.getText());
+            String nombre = inputNombre.getText();
+            String direccion = inputDireccion.getText();
+            long telefono = Long.parseLong(inputTelefono.getText());
+            int nroLegajo = Integer.parseInt(inputNroLegajo.getText());
+            String fechaIngreso = inputFechaIngreso.getText();
+
+            Empleado empleado = new Empleado(indice, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            fileEmpleadoManager.editLine(indice, empleado);
+            listaEmpleados = loadListaEmpleados();
+            tableEmpleados.setItems(loadTableEmpleados());
+            clearInputs();
+        }
+    }
+
+    @FXML
+    public void handleBtnEliminar(){
+        System.out.println("Botón btnEliminar presionado");
+    }
 }

@@ -10,7 +10,6 @@ public class FileEmpleadoManager {
     private File file;
     private FileReader fileReader;
     private FileWriter fileWriter;
-    private BufferedReader bufferedReader;
 
 
     public FileEmpleadoManager(String path, String fileName){
@@ -20,14 +19,21 @@ public class FileEmpleadoManager {
         createFile();
         createFileReader();
         createFileWriter();
-        createBufferedReader();
     }
 
-    public void createFile(){
+    private void createFile(){
         this.file = new File(path);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating new file");
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void createFileReader(){
+    private void createFileReader(){
         try{
             this.fileReader = new FileReader(file);
         }catch (FileNotFoundException e){
@@ -36,7 +42,7 @@ public class FileEmpleadoManager {
         }
     }
 
-    public void createFileWriter(){
+    private void createFileWriter(){
         try{
             this.fileWriter = new FileWriter(file, true);
         }catch (FileNotFoundException e){
@@ -49,13 +55,11 @@ public class FileEmpleadoManager {
 
     }
 
-    public void createBufferedReader(){
-        this.bufferedReader = new BufferedReader(fileReader);
-    }
-
 
     public String readLine(){
         String line = "";
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
         try{
             line = bufferedReader.readLine();
             bufferedReader.close();
@@ -69,6 +73,8 @@ public class FileEmpleadoManager {
     public String[] readLineAsArray(){
         String[] arrayLine ={};
         String line;
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
         try{
             line = bufferedReader.readLine();
             arrayLine = line.split(", ");
@@ -83,6 +89,7 @@ public class FileEmpleadoManager {
         ArrayList<Empleado> data = new ArrayList<>();
         String fileLine;
         String [] splitLine;
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         try {
             fileLine = bufferedReader.readLine();
@@ -109,6 +116,29 @@ public class FileEmpleadoManager {
         return data;
     }
 
+    public void writeAllLines(ArrayList<Empleado> listaEmpleados){
+        for (Empleado emp : listaEmpleados){
+            writeLine(emp);
+        }
+    }
+    public void writeLine(Empleado empleado){
+        try {
+            fileWriter.write(empleado.toString());
+            fileWriter.flush();
+        } catch (IOException e) {
+            System.out.println("Error on FileEmpleadoManager writeLine method");
+            e.printStackTrace();
+        }
+    }
+
+    public void editLine(int id, Empleado empleado){
+        ArrayList<Empleado> listaEmpleados = readAllLines();
+
+
+        for (Empleado emp : listaEmpleados){
+            System.out.println(emp);
+        }
+    }
 
     // Getters and Setters
     public String getPath() {
@@ -144,12 +174,5 @@ public class FileEmpleadoManager {
     }
     public void setFileWriter(FileWriter fileWriter) {
         this.fileWriter = fileWriter;
-    }
-
-    public BufferedReader getBufferedReader() {
-        return bufferedReader;
-    }
-    public void setBufferedReader(BufferedReader bufferedReader) {
-        this.bufferedReader = bufferedReader;
     }
 }

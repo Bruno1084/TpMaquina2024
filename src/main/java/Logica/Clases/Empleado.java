@@ -28,4 +28,10 @@ public class Empleado extends Persona {
     public void setFechaIngreso(String fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
+
+    @Override
+    public String toString(){
+        return getId() + ", " + getDni() + ", " + getNombre() + ", " + getDireccion()
+                + ", " + getTelefono() + ", " + nroLegajo + ", " + fechaIngreso + "\n";
+    }
 }
