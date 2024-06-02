@@ -18,24 +18,24 @@
                <Font name="System Bold" size="18.0" />
             </font></Text>
             <Text layoutX="33.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni:" />
-            <TextField layoutX="67.0" layoutY="76.0" />
+            <TextField fx:id="inputDNI" layoutX="67.0" layoutY="76.0" />
             <Text layoutX="314.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-            <TextField layoutX="368.0" layoutY="76.0" />
+            <TextField fx:id="inputNombre" layoutX="368.0" layoutY="76.0" />
             <Text layoutX="28.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" />
-            <TextField layoutX="84.0" layoutY="141.0" />
+            <TextField fx:id="inputDireccion" layoutX="84.0" layoutY="141.0" />
             <Text layoutX="312.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
-            <TextField layoutX="376.0" layoutY="141.0" />
-            <Button fx:id="btnAniadir" layoutX="18.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="80.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="148.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+            <TextField fx:id="inputTelefono" layoutX="376.0" layoutY="141.0" />
+            <Button fx:id="btnAniadir" layoutX="18.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
+            <Button fx:id="btnEliminar" layoutX="157.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
+            <Button fx:id="btnEditar" layoutX="87.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
          <Text layoutX="32.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cuil:" />
-         <TextField layoutX="84.0" layoutY="217.0" />
+         <TextField fx:id="inputCuil" layoutX="84.0" layoutY="217.0" />
          <Text layoutX="312.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" />
-         <TextField layoutX="356.0" layoutY="217.0" prefHeight="25.0" prefWidth="140.0" />
+         <TextField fx:id="inputCiudad" layoutX="356.0" layoutY="217.0" prefHeight="25.0" prefWidth="140.0" />
         </Pane>
         <TableView fx:id="tableProveedores" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="columnID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="columnID" maxWidth="80.0" minWidth="80.0" resizable="false" text="ID" />
                 <TableColumn fx:id="columnDni" prefWidth="75.0" text="Dni" />
             <TableColumn fx:id="columnNombre" prefWidth="75.0" text="Nombre" />
             <TableColumn fx:id="columnDireccion" prefWidth="75.0" text="Dirección" />

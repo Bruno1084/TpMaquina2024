@@ -27,4 +27,10 @@ public class Proveedor extends Persona {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+
+    @Override
+    public String toString(){
+        return getId() + ", " + getDni() + ", " + getNombre() + ", " + getDireccion()
+                + ", " + getTelefono() + ", " + cuil + ", " + ciudad + "\n";
+    }
 }

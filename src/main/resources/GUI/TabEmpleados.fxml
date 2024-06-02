@@ -26,8 +26,8 @@
          <Text layoutX="33.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
          <TextField fx:id="inputNroLegajo" layoutX="400.0" layoutY="148.0" />
          <Button fx:id="btnAniadir" layoutX="16.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
-         <Button fx:id="btnEliminar" layoutX="77.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
-         <Button fx:id="btnEditar" layoutX="143.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
+         <Button fx:id="btnEliminar" layoutX="147.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
+         <Button fx:id="btnEditar" layoutX="83.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
          <TextField fx:id="inputTelefono" layoutX="92.0" layoutY="209.0" />
          <Text layoutX="325.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nro Legajo:" />
          <Text layoutX="320.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de Ingreso:" />
@@ -35,7 +35,7 @@
       </Pane>
       <TableView fx:id="tableEmpleados" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
-          <TableColumn fx:id="columnID" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="columnID" maxWidth="80.0" minWidth="80.0" resizable="false" text="ID" />
           <TableColumn fx:id="columnDni" prefWidth="75.0" text="Dni" />
             <TableColumn fx:id="columnNombre" prefWidth="75.0" text="Nombre" />
             <TableColumn fx:id="columnDireccion" prefWidth="75.0" text="Dirección" />

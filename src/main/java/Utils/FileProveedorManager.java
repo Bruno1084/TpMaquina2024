@@ -4,13 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileProveedorManager {
+public class FileProveedorManager implements FileManagerUtils<Proveedor>{
     private String path;
     private String fileName;
     private File file;
     private FileReader fileReader;
     private FileWriter fileWriter;
-    private BufferedReader bufferedReader;
 
 
     public FileProveedorManager(String path, String fileName){
@@ -18,62 +17,39 @@ public class FileProveedorManager {
         this.fileName = fileName;
 
         createFile();
-        createFileReader();
-        createFileWriter();
-        createBufferedReader();
     }
 
     public void createFile(){
         this.file = new File(path);
-    }
-
-    public void createFileReader(){
-        try{
-            this.fileReader = new FileReader(file);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating new file");
+                e.printStackTrace();
+            }
         }
     }
-
-    public void createFileWriter(){
-        try{
-            this.fileWriter = new FileWriter(file, true);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
-        }catch (IOException e){
-            System.out.println("IO Exeption error on FileManager");
-            e.printStackTrace();
-        }
-
-    }
-
-    public void createBufferedReader(){
-        this.bufferedReader = new BufferedReader(fileReader);
-    }
-
 
     public String readLine(){
         String line = "";
-        try{
+
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             line = bufferedReader.readLine();
-            bufferedReader.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        return  line;
+        return line;
     }
 
     public String[] readLineAsArray(){
-        String[] arrayLine ={};
-        String line;
-        try{
-            line = bufferedReader.readLine();
-            arrayLine = line.split(", ");
-            bufferedReader.close();
-        }catch (IOException e){
+        String[] arrayLine = {};
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line = bufferedReader.readLine();
+            if (line != null) {
+                arrayLine = line.split(", ");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return arrayLine;
@@ -81,32 +57,61 @@ public class FileProveedorManager {
 
     public ArrayList<Proveedor> readAllLines(){
         ArrayList<Proveedor> data = new ArrayList<>();
-        String fileLine;
-        String [] splitLine;
 
-        try {
-            fileLine = bufferedReader.readLine();
-            while (fileLine != null){
-                splitLine = fileLine.split(", ");
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+            String fileLine = bufferedReader.readLine();
+
+            while(fileLine != null){
+                String[] splitLine = fileLine.split(", ");
                 int id = Integer.parseInt(splitLine[0]);
                 long dni = Long.parseLong(splitLine[1]);
                 String nombre = splitLine[2];
                 String direccion = splitLine[3];
                 long telefono = Long.parseLong(splitLine[4]);
-                long cuil = Long.parseLong(splitLine[5]);
+                int nroLegajo = Integer.parseInt(splitLine[5]);
                 String ciudad = splitLine[6];
 
-                Proveedor proveedor = new Proveedor(id, dni, nombre, direccion, telefono, cuil, ciudad);
+                Proveedor proveedor = new Proveedor(id, dni, nombre, direccion, telefono, nroLegajo, ciudad);
                 data.add(proveedor);
 
                 fileLine = bufferedReader.readLine();
             }
-            bufferedReader.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-
         return data;
+    }
+
+    public void writeAllLines(ArrayList<Proveedor> listaEmpleados){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
+            for (Proveedor prov : listaEmpleados){
+                bufferedWriter.write(prov.toString());
+            }
+        } catch (IOException e) {
+            System.out.println("Error on FileProveedorManager writeAllLines method");
+            e.printStackTrace();
+        }
+    }
+
+    public void writeLine(Proveedor proveedor){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+            bufferedWriter.write(proveedor.toString());
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            System.out.println("Error on FileProveedorManager writeLine method");
+            e.printStackTrace();
+        }
+    }
+
+    public void editLine(int id, Proveedor proveedor){
+        ArrayList<Proveedor> listaProveedores = readAllLines();
+        for (int i = 0; i < listaProveedores.size(); i++) {
+            if (listaProveedores.get(i).getId() == id) {
+                listaProveedores.set(i, proveedor);
+                break;
+            }
+        }
+        writeAllLines(listaProveedores);
     }
 
 
@@ -144,12 +149,5 @@ public class FileProveedorManager {
     }
     public void setFileWriter(FileWriter fileWriter) {
         this.fileWriter = fileWriter;
-    }
-
-    public BufferedReader getBufferedReader() {
-        return bufferedReader;
-    }
-    public void setBufferedReader(BufferedReader bufferedReader) {
-        this.bufferedReader = bufferedReader;
     }
 }
