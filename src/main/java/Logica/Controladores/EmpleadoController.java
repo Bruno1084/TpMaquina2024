@@ -175,6 +175,12 @@ public class EmpleadoController {
 
     @FXML
     public void handleBtnEliminar(){
-        System.out.println("Botón btnEliminar presionado");
+        if (!tableEmpleados.getSelectionModel().isEmpty()) {
+            Empleado selectedEmpleado = tableEmpleados.getSelectionModel().getSelectedItem();
+            fileEmpleadoManager.deleteLine(selectedEmpleado.getId());
+            listaEmpleados = loadListaEmpleados();
+            tableEmpleados.setItems(loadTableEmpleados());
+            clearInputs();
+        }
     }
 }

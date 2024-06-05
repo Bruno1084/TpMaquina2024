@@ -11,7 +11,6 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
     private FileReader fileReader;
     private FileWriter fileWriter;
 
-
     public FileEmpleadoManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
@@ -114,6 +113,11 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         writeAllLines(listaEmpleados);
     }
 
+    public void deleteLine(int id) {
+        ArrayList<Empleado> listaEmpleados = readAllLines();
+        listaEmpleados.removeIf(empleado -> empleado.getId() == id);
+        writeAllLines(listaEmpleados);
+    }
 
     // Getters and Setters
     public String getPath() {

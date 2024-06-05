@@ -18,16 +18,16 @@
                <Font name="System Bold" size="18.0" />
             </font></Text>
             <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni:" />
-            <TextField layoutX="50.0" layoutY="63.0" />
+            <TextField fx:id="inputDni" layoutX="50.0" layoutY="63.0" />
             <Text layoutX="340.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-            <TextField layoutX="398.0" layoutY="63.0" />
+            <TextField fx:id="inputNombre" layoutX="398.0" layoutY="63.0" />
             <Text layoutX="24.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" />
-            <TextField layoutX="82.0" layoutY="138.0" />
+            <TextField fx:id="inputDireccion" layoutX="82.0" layoutY="138.0" />
             <Text layoutX="322.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
-            <TextField layoutX="377.0" layoutY="138.0" />
-            <Button fx:id="btnAniadir" layoutX="18.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="76.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="142.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+            <TextField fx:id="inputTelefono" layoutX="377.0" layoutY="138.0" />
+            <Button fx:id="btnAniadir" layoutX="18.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
+            <Button fx:id="btnEliminar" layoutX="146.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
+            <Button fx:id="btnEditar" layoutX="82.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
         </Pane>
         <TableView fx:id="tableClientes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>

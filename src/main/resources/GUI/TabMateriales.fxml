@@ -19,20 +19,20 @@
                <Font name="System Bold" size="18.0" />
             </font></Text>
             <Text layoutX="23.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
-            <TextField layoutX="74.0" layoutY="76.0" prefHeight="25.0" prefWidth="142.0" />
+            <TextField fx:id="inputNombre" layoutX="74.0" layoutY="76.0" prefHeight="25.0" prefWidth="142.0" />
             <Text layoutX="394.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medida:" />
-            <TextField layoutX="443.0" layoutY="76.0" />
+            <TextField fx:id="inputMedida" layoutX="443.0" layoutY="76.0" />
             <Text layoutX="23.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock:" />
-            <TextField layoutX="58.0" layoutY="137.0" prefHeight="25.0" prefWidth="117.0" />
-            <Button fx:id="btnAniadir" layoutX="499.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="562.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="631.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+            <TextField fx:id="inputStock" layoutX="58.0" layoutY="137.0" prefHeight="25.0" prefWidth="117.0" />
+            <Button fx:id="btnAniadir" layoutX="499.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
+            <Button fx:id="btnEliminar" layoutX="629.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
+            <Button fx:id="btnEditar" layoutX="568.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
          <Text layoutX="394.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio de Compra:" />
          <Text layoutX="400.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio de Venta:" />
-         <TextField layoutX="491.0" layoutY="205.0" prefHeight="25.0" prefWidth="117.0" />
-         <TextField layoutX="499.0" layoutY="138.0" prefHeight="25.0" prefWidth="117.0" />
+         <TextField fx:id="inputPrecioVenta" layoutX="491.0" layoutY="205.0" prefHeight="25.0" prefWidth="117.0" />
+         <TextField fx:id="inputPrecioCompra" layoutX="499.0" layoutY="138.0" prefHeight="25.0" prefWidth="117.0" />
          <Text layoutX="26.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción:" />
-         <TextArea layoutX="100.0" layoutY="207.0" prefHeight="76.0" prefWidth="200.0" />
+         <TextArea fx:id="inputDescripcion" layoutX="100.0" layoutY="207.0" prefHeight="76.0" prefWidth="200.0" />
         </Pane>
         <TableView fx:id="tableMateriales" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>

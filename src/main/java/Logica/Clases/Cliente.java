@@ -6,4 +6,9 @@ public class Cliente extends Persona {
         super(id, dni, nombre, direccion, telefono);
     }
     public Cliente(){}
+
+    @Override
+    public String toString(){
+        return getId() + ", " + getDni() + ", " + getNombre() + ", " + getDireccion() + ", " + getTelefono() + "\n";
+    }
 }
