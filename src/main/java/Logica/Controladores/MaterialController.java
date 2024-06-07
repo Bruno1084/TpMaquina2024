@@ -82,7 +82,7 @@ public class MaterialController {
                 inputStock.setText(String.valueOf(material.getStock()));
                 inputPrecioCompra.setText(String.valueOf(material.getPrecioCompra()));
                 inputPrecioVenta.setText(String.valueOf(material.getPrecioVenta()));
-                inputAlta.setText(String.valueOf(material.getAlta()));
+                inputAlta.setSelected(material.getAlta());
                 indice = material.getId();
             }
         });
