@@ -4,13 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileVentaManager {
+public class FileVentaManager implements FileManagerUtils<Venta> {
     private String path;
     private String fileName;
     private File file;
     private FileReader fileReader;
     private FileWriter fileWriter;
-    private BufferedReader bufferedReader;
 
 
     public FileVentaManager(String path, String fileName){
@@ -18,62 +17,39 @@ public class FileVentaManager {
         this.fileName = fileName;
 
         createFile();
-        createFileReader();
-        createFileWriter();
-        createBufferedReader();
     }
 
-    public void createFile(){
+    private void createFile(){
         this.file = new File(path);
-    }
-
-    public void createFileReader(){
-        try{
-            this.fileReader = new FileReader(file);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating new file");
+                e.printStackTrace();
+            }
         }
     }
-
-    public void createFileWriter(){
-        try{
-            this.fileWriter = new FileWriter(file, true);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
-        }catch (IOException e){
-            System.out.println("IO Exeption error on FileManager");
-            e.printStackTrace();
-        }
-
-    }
-
-    public void createBufferedReader(){
-        this.bufferedReader = new BufferedReader(fileReader);
-    }
-
 
     public String readLine(){
         String line = "";
-        try{
+
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             line = bufferedReader.readLine();
-            bufferedReader.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        return  line;
+        return line;
     }
 
     public String[] readLineAsArray(){
-        String[] arrayLine ={};
-        String line;
-        try{
-            line = bufferedReader.readLine();
-            arrayLine = line.split(", ");
-            bufferedReader.close();
-        }catch (IOException e){
+        String[] arrayLine = {};
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line = bufferedReader.readLine();
+            if (line != null) {
+                arrayLine = line.split(", ");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return arrayLine;
@@ -81,31 +57,64 @@ public class FileVentaManager {
 
     public ArrayList<Venta> readAllLines(){
         ArrayList<Venta> data = new ArrayList<>();
-        String fileLine;
-        String [] splitLine;
 
-        try {
-            fileLine = bufferedReader.readLine();
-            while (fileLine != null){
-                splitLine = fileLine.split(", ");
-                int idVenta = Integer.parseInt(splitLine[0]);
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+            String fileLine = bufferedReader.readLine();
+
+            while(fileLine != null){
+                String[] splitLine = fileLine.split(", ");
+                int id = Integer.parseInt(splitLine[0]);
                 int idProveedor = Integer.parseInt(splitLine[1]);
                 String fechaVenta = splitLine[2];
-                boolean despachado = Boolean.parseBoolean(splitLine[3]);
+                boolean isDespachado = Boolean.parseBoolean(splitLine[3]);
 
-                Venta venta = new Venta(idVenta, idProveedor, fechaVenta, despachado);
+                Venta venta = new Venta(id, idProveedor, fechaVenta, isDespachado);
                 data.add(venta);
 
                 fileLine = bufferedReader.readLine();
             }
-            bufferedReader.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-
         return data;
     }
 
+    public void writeAllLines(ArrayList<Venta> listaVentas){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
+            for (Venta vent : listaVentas){
+                bufferedWriter.write(vent.toString());
+            }
+        } catch (IOException e) {
+            System.out.println("Error on FileVentaManager writeAllLines method");
+            e.printStackTrace();
+        }
+    }
+
+    public void writeLine(Venta venta){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+            bufferedWriter.write(venta.toString());
+        } catch (IOException e) {
+            System.out.println("Error on FileVentaManager writeLine method");
+            e.printStackTrace();
+        }
+    }
+
+    public void editLine(int id, Venta venta){
+        ArrayList<Venta> listaVentas = readAllLines();
+        for (int i = 0; i < listaVentas.size(); i++) {
+            if (listaVentas.get(i).getIdVenta() == id) {
+                listaVentas.set(i, venta);
+                break;
+            }
+        }
+        writeAllLines(listaVentas);
+    }
+
+    public void deleteLine(int id) {
+        ArrayList<Venta> listaVentas = readAllLines();
+        listaVentas.removeIf(venta -> venta.getIdVenta() == id);
+        writeAllLines(listaVentas);
+    }
 
     // Getters and Setters
     public String getPath() {
@@ -141,12 +150,5 @@ public class FileVentaManager {
     }
     public void setFileWriter(FileWriter fileWriter) {
         this.fileWriter = fileWriter;
-    }
-
-    public BufferedReader getBufferedReader() {
-        return bufferedReader;
-    }
-    public void setBufferedReader(BufferedReader bufferedReader) {
-        this.bufferedReader = bufferedReader;
     }
 }

@@ -53,4 +53,9 @@ public class Compra {
     public void setIdEmpleado(int idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
+
+    @Override
+    public String toString(){
+        return id + ", " + fecha + ", " + idCliente + ", " + pagada + ", " + idEmpleado + "\n";
+    }
 }

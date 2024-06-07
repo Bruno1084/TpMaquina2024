@@ -1,5 +1,5 @@
-1, 1, Juan Perez, Direccion1, 1, 1, Ciudad1
-2, 2, Proveedor2, Direccion2, 2, 2, Ciudad2
+1, 75726526, Juan Perez, Direccion1, 2617475, 1, Drangleic
+2, 86386265, Doe Juan, Street Juan, 7635, 776376, Derry
 3, 3, Proveedor3, Direccion3, 3, 3, Ciudad3
 4, 4, Proveedor4, Direccion4, 4, 4, Ciudad4
 5, 5, Proveedor5, Direccion5, 5, 5, Ciudad5

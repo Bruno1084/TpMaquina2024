@@ -41,15 +41,6 @@ public class FileMaterialManager implements FileManagerUtils<Material>{
         return line;
     }
 
-    public void createFileReader(){
-        try{
-            this.fileReader = new FileReader(file);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
-        }
-    }
-
     public String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
@@ -78,8 +69,9 @@ public class FileMaterialManager implements FileManagerUtils<Material>{
                 int stock = Integer.parseInt(splitLine[4]);
                 float precioCompra = Float.parseFloat(splitLine[5]);
                 float precioVenta = Float.parseFloat(splitLine[6]);
+                boolean alta = Boolean.parseBoolean(splitLine[7]);
 
-                Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
+                Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta, alta);
                 data.add(material);
 
                 fileLine = bufferedReader.readLine();
@@ -104,7 +96,6 @@ public class FileMaterialManager implements FileManagerUtils<Material>{
     public void writeLine(Material material){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(material.toString());
-            bufferedWriter.newLine();
         } catch (IOException e) {
             System.out.println("Error on FileMaterialManager writeLine method");
             e.printStackTrace();

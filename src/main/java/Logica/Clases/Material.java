@@ -8,8 +8,9 @@ public class Material {
     private int stock;
     private float precioCompra;
     private float precioVenta;
+    private boolean alta;
 
-    public Material(int id, String nombre, String descripcion, String tipoMedida, int stock, float precioCompra, float precioVenta){
+    public Material(int id, String nombre, String descripcion, String tipoMedida, int stock, float precioCompra, float precioVenta, boolean alta){
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -17,6 +18,7 @@ public class Material {
         this.stock = stock;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
+        this.alta = alta;
     }
     public Material(){}
 
@@ -69,5 +71,18 @@ public class Material {
     }
     public void setPrecioVenta(float precioVenta) {
         this.precioVenta = precioVenta;
+    }
+
+    public boolean getAlta() {
+        return alta;
+    }
+    public void setAlta(boolean alta) {
+        this.alta = alta;
+    }
+
+    @Override
+    public String toString(){
+        return id + ", " + nombre + ", " + descripcion + ", " + tipoMedida +
+                ", " + stock + ", " + precioCompra + ", " + precioVenta + ", " + alta + "\n";
     }
 }

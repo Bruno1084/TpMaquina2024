@@ -8,135 +8,112 @@ public class FileDetalleVentaManager {
     private String path;
     private String fileName;
     private File file;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
-    private BufferedReader bufferedReader;
-
 
     public FileDetalleVentaManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
-
         createFile();
-        createFileReader();
-        createFileWriter();
-        createBufferedReader();
     }
 
-
-    public void createFile(){
-        this.file = new File(path, fileName);
-    }
-
-    public void createFileReader(){
-        try{
-            this.fileReader = new FileReader(file);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
+    private void createFile(){
+        this.file = new File(path);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating new file");
+                e.printStackTrace();
+            }
         }
     }
-
-    public void createFileWriter(){
-        try{
-            this.fileWriter = new FileWriter(file, true);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
-        }catch (IOException e){
-            System.out.println("IO Exeption error on FileManager");
-            e.printStackTrace();
-        }
-
-    }
-
-    public void createBufferedReader(){
-        this.bufferedReader = new BufferedReader(fileReader);
-    }
-
 
     public String readLine(){
         String line = "";
-        try{
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             line = bufferedReader.readLine();
-            bufferedReader.close();
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
-
-        return  line;
+        return line;
     }
 
     public String[] readLineAsArray(){
-        String[] arrayLine ={};
-        String line;
-        try{
-            line = bufferedReader.readLine();
-            arrayLine = line.split(", ");
-            bufferedReader.close();
-        }catch (IOException e){
+        String[] arrayLine = {};
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line = bufferedReader.readLine();
+            if (line != null) {
+                arrayLine = line.split(", ");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return arrayLine;
     }
 
-    public ArrayList<DetalleVenta> readAllLines(){
+    public ArrayList<DetalleVenta> readLinesOfVenta(){
         ArrayList<DetalleVenta> data = new ArrayList<>();
-        String fileLine;
-        String [] splitLine;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (!line.matches("\\d+\\{")) continue;
 
-        try {
-            fileLine = bufferedReader.readLine();
-            while (fileLine != null){
-                if(fileLine.contains("{")){
-                    fileLine = bufferedReader.readLine();
-                    if (fileLine.contains("}")){
-                        continue;
-                    }else {
-                        splitLine= fileLine.split(" ,");
-                        int idDetalleVenta = Integer.parseInt(splitLine[0]);
-                        int idMaterial = Integer.parseInt(splitLine[1]);
-                        int cantidad = Integer.parseInt(splitLine[2]);
-                        Long peso = Long.parseLong(splitLine[3]);
-                        Long precio = Long.parseLong(splitLine[4]);
+                int idVenta = Integer.parseInt(line.split("\\{")[0].trim());
+                System.out.println("Id de venta: " + idVenta);
 
-                        DetalleVenta detalleVenta = new DetalleVenta(idDetalleVenta, idMaterial, cantidad, peso, precio);
-                        data.add(detalleVenta);
-                    }
+                while (!(line = bufferedReader.readLine()).equals("}")) {
+                    String[] splitLine = line.split(", ");
+                    int id = Integer.parseInt(splitLine[0]);
+                    int idMaterial = Integer.parseInt(splitLine[1]);
+                    int cantidad = Integer.parseInt(splitLine[2]);
+                    long peso = Long.parseLong(splitLine[3]);
+                    long precio = Long.parseLong(splitLine[4]);
+
+                    DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio);
+                    data.add(detalleVenta);
                 }
-
-
-
-                fileLine = bufferedReader.readLine();
             }
-            bufferedReader.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
         return data;
     }
 
-    public void searchGroupOfDetails(int id){
-        /*Binary Search Implementation
-           binarySeach(arr, target){
-            int l = 0;
-            int m = arr.length() -1;
-
-            while(l <= m){
-                int mid = Math.floor((l + r)/2);
-
-                if(arr[mid] == target){ return mid };
-                else if(arr[mid] < target){
-                    l = midd +1;
-                }else{
-                    r = midd -1;
-                }
+    public void writeAllLines(ArrayList<DetalleVenta> listaDetalleVentas){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
+            for (DetalleVenta detalleVenta : listaDetalleVentas){
+                bufferedWriter.write(detalleVenta.toString() + "\n");
             }
-            return l;
-        * */
+        } catch (IOException e) {
+            System.out.println("Error on FileDetalleVentaManager writeAllLines method");
+            e.printStackTrace();
+        }
     }
 
+    public void writeLine(DetalleVenta detalleVenta){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+            bufferedWriter.write(detalleVenta.toString() + "\n");
+        } catch (IOException e) {
+            System.out.println("Error on FileDetalleVentaManager writeLine method");
+            e.printStackTrace();
+        }
+    }
+
+    public void editLine(int id, DetalleVenta detalleVenta){
+        ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
+        for (int i = 0; i < listaDetalleVenta.size(); i++) {
+            if (listaDetalleVenta.get(i).getIdDetalleVenta() == id) {
+                listaDetalleVenta.set(i, detalleVenta);
+                break;
+            }
+        }
+        writeAllLines(listaDetalleVenta);
+    }
+
+    public void deleteLine(int id) {
+        ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
+        listaDetalleVenta.removeIf(detalleVenta -> detalleVenta.getIdDetalleVenta() == id);
+        writeAllLines(listaDetalleVenta);
+    }
 
     // Getters and Setters
     public String getPath() {
@@ -158,26 +135,5 @@ public class FileDetalleVentaManager {
     }
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public FileReader getFileReader() {
-        return fileReader;
-    }
-    public void setFileReader(FileReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
-    }
-
-    public BufferedReader getBufferedReader() {
-        return bufferedReader;
-    }
-    public void setBufferedReader(BufferedReader bufferedReader) {
-        this.bufferedReader = bufferedReader;
     }
 }

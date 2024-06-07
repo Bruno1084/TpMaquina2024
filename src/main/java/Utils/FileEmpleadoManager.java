@@ -69,8 +69,9 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
                 long telefono = Long.parseLong(splitLine[4]);
                 int nroLegajo = Integer.parseInt(splitLine[5]);
                 String fechaIngreso = splitLine[6];
+                boolean alta = Boolean.parseBoolean(splitLine[7]);
 
-                Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+                Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso, alta);
                 data.add(empleado);
 
                 fileLine = bufferedReader.readLine();
@@ -95,7 +96,6 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
     public void writeLine(Empleado empleado){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(empleado.toString());
-            bufferedWriter.newLine();
         } catch (IOException e) {
             System.out.println("Error on FileEmpleadoManager writeLine method");
             e.printStackTrace();

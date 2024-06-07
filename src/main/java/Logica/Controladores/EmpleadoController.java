@@ -4,10 +4,7 @@ import Utils.FileEmpleadoManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 
@@ -30,6 +27,8 @@ public class EmpleadoController {
     private TableColumn<Empleado, Integer> columnNroLegajo;
     @FXML
     private TableColumn<Empleado, String> columnFechaIngreso;
+    @FXML
+    private TableColumn<Empleado, Boolean> columnAlta;
 
     // Form inputs
     @FXML
@@ -45,6 +44,7 @@ public class EmpleadoController {
     @FXML
     private TextField inputFechaIngreso;
 
+
     // Tab buttons
     @FXML
     private Button btnAniadir;
@@ -52,6 +52,8 @@ public class EmpleadoController {
     private Button btnEliminar;
     @FXML
     private Button btnEditar;
+    @FXML
+    private RadioButton inputAlta;
 
     // Other things
     private final FileEmpleadoManager fileEmpleadoManager = new FileEmpleadoManager("src/main/java/Permanencia/Empleado.txt", "Empleado");
@@ -66,6 +68,7 @@ public class EmpleadoController {
         columnTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
         columnNroLegajo.setCellValueFactory(new PropertyValueFactory<>("NroLegajo"));
         columnFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("FechaIngreso"));
+        columnAlta.setCellValueFactory(new PropertyValueFactory<>("Alta"));
 
         listaEmpleados = loadListaEmpleados();
         tableEmpleados.setItems(loadTableEmpleados());
@@ -79,6 +82,7 @@ public class EmpleadoController {
                 inputTelefono.setText(String.valueOf(empleado.getTelefono()));
                 inputNroLegajo.setText(String.valueOf(empleado.getNroLegajo()));
                 inputFechaIngreso.setText(empleado.getFechaIngreso());
+                inputAlta.setSelected(empleado.getAlta());
                 indice = empleado.getId();
             }
         });
@@ -88,7 +92,6 @@ public class EmpleadoController {
     public ArrayList<Empleado> loadListaEmpleados(){
         ArrayList<Empleado> empleados;
         empleados = fileEmpleadoManager.readAllLines();
-
 
         return empleados;
     }
@@ -104,8 +107,9 @@ public class EmpleadoController {
             long telefono = empleado.getTelefono();
             int nroLegajo = empleado.getNroLegajo();
             String fechaIngreso = empleado.getFechaIngreso();
+            boolean alta = empleado.getAlta();
 
-            Empleado newEmpleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            Empleado newEmpleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso, alta);
             data.add(newEmpleado);
         });
 
@@ -123,6 +127,7 @@ public class EmpleadoController {
         inputTelefono.setText("");
         inputNroLegajo.setText("");
         inputFechaIngreso.setText("");
+        inputAlta.setSelected(false);
     }
 
     public boolean checkInputs(){
@@ -144,9 +149,10 @@ public class EmpleadoController {
             long telefono = Long.parseLong(inputTelefono.getText());
             int nroLegajo = Integer.parseInt(inputNroLegajo.getText());
             String fechaIngreso = inputFechaIngreso.getText();
+            boolean alta = inputAlta.isSelected();
             int id = listaEmpleados.isEmpty() ? 1 : listaEmpleados.get(listaEmpleados.size() - 1).getId() + 1;
 
-            Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso, alta);
             listaEmpleados.add(empleado);
             fileEmpleadoManager.writeLine(empleado);
 
@@ -164,8 +170,9 @@ public class EmpleadoController {
             long telefono = Long.parseLong(inputTelefono.getText());
             int nroLegajo = Integer.parseInt(inputNroLegajo.getText());
             String fechaIngreso = inputFechaIngreso.getText();
+            boolean alta = inputAlta.isSelected();
 
-            Empleado empleado = new Empleado(indice, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso);
+            Empleado empleado = new Empleado(indice, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso, alta);
             fileEmpleadoManager.editLine(indice, empleado);
             listaEmpleados = loadListaEmpleados();
             tableEmpleados.setItems(loadTableEmpleados());

@@ -1,13 +1,11 @@
 package Logica.Controladores;
+import Logica.Clases.Cliente;
 import Logica.Clases.Material;
 import Utils.FileMaterialManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 
@@ -29,12 +27,14 @@ public class MaterialController {
     private TableColumn<Material, Float> columnPrecioCompra;
     @FXML
     private TableColumn<Material, Float> columnPrecioVenta;
+    @FXML
+    private TableColumn<Cliente, Boolean> columnAlta;
 
     // Form inputs
     @FXML
     private TextField inputNombre;
     @FXML
-    private TextField inputDescripcion;
+    private TextArea inputDescripcion;
     @FXML
     private TextField inputTipoMedida;
     @FXML
@@ -51,6 +51,8 @@ public class MaterialController {
     private Button btnEliminar;
     @FXML
     private Button btnEditar;
+    @FXML
+    private RadioButton inputAlta;
 
     // Other things
     private final FileMaterialManager fileMaterialManager = new FileMaterialManager("src/main/java/Permanencia/Material.txt", "Material");
@@ -66,9 +68,24 @@ public class MaterialController {
         columnStock.setCellValueFactory(new PropertyValueFactory<>("Stock"));
         columnPrecioCompra.setCellValueFactory(new PropertyValueFactory<>("PrecioCompra"));
         columnPrecioVenta.setCellValueFactory(new PropertyValueFactory<>("PrecioVenta"));
+        columnAlta.setCellValueFactory(new PropertyValueFactory<>("Alta"));
 
         listaMateriales = loadListaMateriales();
         tableMateriales.setItems(loadTableMateriales());
+
+        tableMateriales.setOnMouseClicked(event ->{
+            if(!tableMateriales.getSelectionModel().isEmpty()){
+                Material material = tableMateriales.getSelectionModel().getSelectedItem();
+                inputNombre.setText(material.getNombre());
+                inputDescripcion.setText(material.getDescripcion());
+                inputTipoMedida.setText(material.getTipoMedida());
+                inputStock.setText(String.valueOf(material.getStock()));
+                inputPrecioCompra.setText(String.valueOf(material.getPrecioCompra()));
+                inputPrecioVenta.setText(String.valueOf(material.getPrecioVenta()));
+                inputAlta.setText(String.valueOf(material.getAlta()));
+                indice = material.getId();
+            }
+        });
     }
 
     public ArrayList<Material> loadListaMateriales(){
@@ -89,8 +106,9 @@ public class MaterialController {
             int stock = material.getStock();
             float precioVenta = material.getPrecioVenta();
             float precioCompra = material.getPrecioCompra();
+            boolean alta = material.getAlta();
 
-            Material newMaterial = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
+            Material newMaterial = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta, alta);
             data.add(newMaterial);
         });
 
@@ -108,6 +126,7 @@ public class MaterialController {
         inputStock.setText("");
         inputPrecioCompra.setText("");
         inputPrecioVenta.setText("");
+        inputAlta.setSelected(false);
     }
 
     public boolean checkInputs(){
@@ -129,12 +148,12 @@ public class MaterialController {
             int stock = Integer.parseInt(inputStock.getText());
             float precioCompra = Float.parseFloat(inputPrecioCompra.getText());
             float precioVenta = Float.parseFloat(inputPrecioVenta.getText());
+            boolean alta = inputAlta.isSelected();
             int id = listaMateriales.isEmpty() ? 1 : listaMateriales.get(listaMateriales.size() - 1).getId() + 1;
 
-            Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
+            Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta, alta);
             listaMateriales.add(material);
             fileMaterialManager.writeLine(material);
-
             tableMateriales.setItems(loadTableMateriales());
             clearInputs();
         }
@@ -149,8 +168,9 @@ public class MaterialController {
             int stock = Integer.parseInt(inputStock.getText());
             float precioCompra = Float.parseFloat(inputPrecioCompra.getText());
             float precioVenta = Float.parseFloat(inputPrecioVenta.getText());
+            boolean alta = inputAlta.isSelected();
 
-            Material material = new Material(indice, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
+            Material material = new Material(indice, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta, alta);
             fileMaterialManager.editLine(indice, material);
             listaMateriales = loadListaMateriales();
             tableMateriales.setItems(loadTableMateriales());

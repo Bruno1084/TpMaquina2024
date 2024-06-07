@@ -18,16 +18,16 @@
                <Font name="System Bold" size="18.0" />
             </font></Text>
             <Text layoutX="23.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha:" />
-            <TextField layoutX="66.0" layoutY="71.0" prefHeight="25.0" prefWidth="108.0" />
-            <Text layoutX="312.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Cliente:" />
-            <TextField layoutX="406.0" layoutY="71.0" />
+            <TextField fx:id="inputFecha" layoutX="66.0" layoutY="71.0" prefHeight="25.0" prefWidth="108.0" />
+            <Text layoutX="312.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID de Cliente:" />
+            <TextField fx:id="inputCliente" layoutX="391.0" layoutY="71.0" />
             <Text layoutX="23.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pagado:" />
-            <TextField layoutX="73.0" layoutY="138.0" prefHeight="25.0" prefWidth="117.0" />
-            <Text layoutX="312.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Empleado:" />
-            <TextField layoutX="420.0" layoutY="137.0" />
-            <Button fx:id="btnAniadir" layoutX="19.0" layoutY="261.0" mnemonicParsing="false" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="80.0" layoutY="261.0" mnemonicParsing="false" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="151.0" layoutY="261.0" mnemonicParsing="false" text="Editar" />
+            <TextField fx:id="inputPagado" layoutX="73.0" layoutY="138.0" prefHeight="25.0" prefWidth="117.0" />
+            <Text layoutX="312.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID de Empleado:" />
+            <TextField fx:id="inputEmpleado" layoutX="406.0" layoutY="137.0" />
+            <Button fx:id="btnAniadir" layoutX="19.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
+            <Button fx:id="btnEliminar" layoutX="145.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
+            <Button fx:id="btnEditar" layoutX="85.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
         </Pane>
         <TableView fx:id="tableCompras" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>

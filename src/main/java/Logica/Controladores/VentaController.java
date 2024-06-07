@@ -1,4 +1,5 @@
 package Logica.Controladores;
+import Logica.Clases.Empleado;
 import Logica.Clases.Venta;
 import Logica.Controladores.ModalControladores.ModalVentaController;
 import Utils.FileVentaManager;
@@ -7,10 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -18,20 +16,37 @@ import java.util.ArrayList;
 
 
 public class VentaController {
+    // Table columns and view
     @FXML
     private TableView<Venta> tableVentas;
     @FXML
-    private TableColumn<Integer, Venta> columnID;
+    private TableColumn<Venta, Integer> columnID;
     @FXML
-    private TableColumn<Integer, Venta> columnIdProveedor;
+    private TableColumn<Venta, Integer> columnIdProveedor;
     @FXML
     private TableColumn columnDetalleVenta;
     @FXML
-    private TableColumn<String, Venta> columnFechaVenta;
-
+    private TableColumn<Venta, String> columnFechaVenta;
     @FXML
-    private TableColumn<Boolean, Venta> columnDespachado;
+    private TableColumn<Venta, Boolean> columnDespachado;
 
+    // Form inputs
+    @FXML
+    private TextField inputProveedor;
+    @FXML
+    private TextField inputDespachado;
+    @FXML
+    private TextField inputFechaVenta;
+
+    // Tab buttons
+    @FXML
+    private Button btnAniadir;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Button btnEditar;
+
+    // Other things
     private final FileVentaManager fileVentaManager = new FileVentaManager("src/main/java/Permanencia/Venta.txt", "Venta");
     private ArrayList<Venta> listaVentas = new ArrayList<>();
     private static int indice = 0;
@@ -69,6 +84,17 @@ public class VentaController {
 
         listaVentas = loadListaVentas();
         tableVentas.setItems(loadTableVentas());
+
+        tableVentas.setOnMouseClicked(event ->{
+            if(!tableVentas.getSelectionModel().isEmpty()){
+                Venta venta = tableVentas.getSelectionModel().getSelectedItem();
+                inputProveedor.setText(String.valueOf(venta.getIdProveedor()));
+                inputDespachado.setText(String.valueOf(venta.isDespachado()));
+                inputFechaVenta.setText(venta.getFechaVenta());
+
+                indice = venta.getIdVenta();
+            }
+        });
     }
 
 
@@ -95,6 +121,25 @@ public class VentaController {
         return data;
     }
 
+    public Venta getLastVenta(){
+        return listaVentas.get(listaVentas.size() -1);
+    }
+
+    public void clearInputs(){
+        inputFechaVenta.setText("");
+        inputDespachado.setText("");
+        inputProveedor.setText("");
+    }
+
+    public boolean checkInputs(){
+        if(inputFechaVenta.getText().isEmpty() || inputDespachado.getText().isEmpty() ||
+                inputProveedor.getText().isEmpty()) {
+            System.out.println("There is an empty input");
+            return false;
+        }
+        return true;
+    }
+
     public void handleDetalleButton(Venta venta){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/ModalControladores/modalDetalleVenta.fxml"));
@@ -104,12 +149,51 @@ public class VentaController {
             ModalVentaController controller = fxmlLoader.getController();
             controller.setVenta(venta);
 
-            //fxmlLoader.setController(controller);
             secondStage.setResizable(false);
             secondStage.show();
         }catch (IOException exception){
             System.out.println("Error path is incorrect");
             exception.printStackTrace();
+        }
+    }
+    @FXML
+    public void handleBtnAniadir(){
+        if (checkInputs()){
+            int idProveedor = Integer.parseInt(inputProveedor.getText());
+            String fechaVenta = inputFechaVenta.getText();
+            boolean isDespachado = Boolean.getBoolean(inputDespachado.getText());
+            int id = listaVentas.isEmpty() ? 1 : listaVentas.get(listaVentas.size() - 1).getIdVenta() + 1;
+
+            Venta venta = new Venta(id, idProveedor, fechaVenta, isDespachado);
+            listaVentas.add(venta);
+            fileVentaManager.writeLine(venta);
+
+            tableVentas.setItems(loadTableVentas());
+            clearInputs();
+        }
+    }
+    @FXML
+    public void handleBtnEditar(){
+        if (checkInputs()){
+            int idProveedor = Integer.parseInt(inputProveedor.getText());
+            String fechaVenta = inputFechaVenta.getText();
+            boolean isDespachado = Boolean.getBoolean(inputDespachado.getText());
+
+            Venta venta = new Venta(indice, idProveedor, fechaVenta, isDespachado);
+            fileVentaManager.editLine(indice, venta);
+            listaVentas = loadListaVentas();
+            tableVentas.setItems(loadTableVentas());
+            clearInputs();
+        }
+    }
+    @FXML
+    public void handleBtnEliminar(){
+        if (!tableVentas.getSelectionModel().isEmpty()) {
+            Venta selectedVenta = tableVentas.getSelectionModel().getSelectedItem();
+            fileVentaManager.deleteLine(selectedVenta.getIdVenta());
+            listaVentas = loadListaVentas();
+            tableVentas.setItems(loadTableVentas());
+            clearInputs();
         }
     }
 }

@@ -42,15 +42,6 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         return line;
     }
 
-    public void createFileReader(){
-        try{
-            this.fileReader = new FileReader(file);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
-        }
-    }
-
     public String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
@@ -77,8 +68,9 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
                 String nombre = splitLine[2];
                 String direccion = splitLine[3];
                 long telefono = Long.parseLong(splitLine[4]);
+                boolean alta = Boolean.parseBoolean(splitLine[5]);
 
-                Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono);
+                Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono, alta);
                 data.add(cliente);
 
                 fileLine = bufferedReader.readLine();
@@ -103,7 +95,6 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
     public void writeLine(Cliente cliente){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(cliente.toString());
-            bufferedWriter.newLine();
         } catch (IOException e) {
             System.out.println("Error on FileClienteManager writeLine method");
             e.printStackTrace();

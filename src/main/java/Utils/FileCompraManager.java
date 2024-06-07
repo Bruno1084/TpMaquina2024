@@ -10,7 +10,6 @@ public class FileCompraManager {
     private File file;
     private FileReader fileReader;
     private FileWriter fileWriter;
-    private BufferedReader bufferedReader;
 
 
     public FileCompraManager(String path, String fileName){
@@ -18,62 +17,39 @@ public class FileCompraManager {
         this.fileName = fileName;
 
         createFile();
-        createFileReader();
-        createFileWriter();
-        createBufferedReader();
     }
 
     public void createFile(){
-        this.file = new File(path, fileName);
-    }
-
-    public void createFileReader(){
-        try{
-            this.fileReader = new FileReader(file);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
+        this.file = new File(path);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating new file");
+                e.printStackTrace();
+            }
         }
     }
-
-    public void createFileWriter(){
-        try{
-            this.fileWriter = new FileWriter(file, true);
-        }catch (FileNotFoundException e){
-            System.out.println("File not found");
-            e.printStackTrace();
-        }catch (IOException e){
-            System.out.println("IO Exeption error on FileManager");
-            e.printStackTrace();
-        }
-
-    }
-
-    public void createBufferedReader(){
-        this.bufferedReader = new BufferedReader(fileReader);
-    }
-
 
     public String readLine(){
         String line = "";
-        try{
+
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             line = bufferedReader.readLine();
-            bufferedReader.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        return  line;
+        return line;
     }
 
     public String[] readLineAsArray(){
-        String[] arrayLine ={};
-        String line;
-        try{
-            line = bufferedReader.readLine();
-            arrayLine = line.split(", ");
-            bufferedReader.close();
-        }catch (IOException e){
+        String[] arrayLine = {};
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line = bufferedReader.readLine();
+            if (line != null) {
+                arrayLine = line.split(", ");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return arrayLine;
@@ -81,32 +57,65 @@ public class FileCompraManager {
 
     public ArrayList<Compra> readAllLines(){
         ArrayList<Compra> data = new ArrayList<>();
-        String fileLine;
-        String [] splitLine;
 
-        try {
-            fileLine = bufferedReader.readLine();
-            while (fileLine != null){
-                splitLine = fileLine.split(", ");
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+            String fileLine = bufferedReader.readLine();
+
+            while(fileLine != null){
+                String[] splitLine = fileLine.split(", ");
                 int id = Integer.parseInt(splitLine[0]);
                 String fecha = splitLine[1];
-                int clienteId = Integer.parseInt(splitLine[2]);
+                int idCliente = Integer.parseInt(splitLine[2]);
                 String pagado = splitLine[3];
-                int empleadoId = Integer.parseInt(splitLine[4]);
+                int idEmpleado = Integer.parseInt(splitLine[4]);
 
-                Compra compra = new Compra(id, fecha, clienteId, pagado, empleadoId);
+                Compra compra = new Compra(id, fecha, idCliente, pagado, idEmpleado);
                 data.add(compra);
 
                 fileLine = bufferedReader.readLine();
             }
-            bufferedReader.close();
         }catch (IOException e){
             e.printStackTrace();
         }
-
         return data;
     }
 
+    public void writeAllLines(ArrayList<Compra> listaCompras){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
+            for (Compra comp : listaCompras){
+                bufferedWriter.write(comp.toString());
+            }
+        } catch (IOException e) {
+            System.out.println("Error on FileCompraManager writeAllLines method");
+            e.printStackTrace();
+        }
+    }
+
+    public void writeLine(Compra compra){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+            bufferedWriter.write(compra.toString());
+        } catch (IOException e) {
+            System.out.println("Error on FileCompraManager writeLine method");
+            e.printStackTrace();
+        }
+    }
+
+    public void editLine(int id, Compra compra){
+        ArrayList<Compra> listaCompras = readAllLines();
+        for (int i = 0; i < listaCompras.size(); i++) {
+            if (listaCompras.get(i).getId() == id) {
+                listaCompras.set(i, compra);
+                break;
+            }
+        }
+        writeAllLines(listaCompras);
+    }
+
+    public void deleteLine(int id) {
+        ArrayList<Compra> listaCompras = readAllLines();
+        listaCompras.removeIf(compra -> compra.getId() == id);
+        writeAllLines(listaCompras);
+    }
 
     // Getters and Setters
     public String getPath() {
@@ -142,12 +151,5 @@ public class FileCompraManager {
     }
     public void setFileWriter(FileWriter fileWriter) {
         this.fileWriter = fileWriter;
-    }
-
-    public BufferedReader getBufferedReader() {
-        return bufferedReader;
-    }
-    public void setBufferedReader(BufferedReader bufferedReader) {
-        this.bufferedReader = bufferedReader;
     }
 }

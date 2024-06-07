@@ -52,4 +52,9 @@ public class Venta {
     public void setDespachado(boolean despachado) {
         this.despachado = despachado;
     }
+
+    @Override
+    public String toString(){
+        return idVenta + ", " + idProveedor + ", " + fechaVenta + ", " + despachado + "\n";
+    }
 }
