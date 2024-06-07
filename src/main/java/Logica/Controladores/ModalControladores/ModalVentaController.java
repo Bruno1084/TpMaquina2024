@@ -23,6 +23,8 @@ public class ModalVentaController {
     @FXML
     TableColumn<DetalleVenta, Integer> columnMaterial;
     @FXML
+    TableColumn<DetalleVenta, Integer> columnCantidad;
+    @FXML
     TableColumn<DetalleVenta, Long> columnPeso;
     @FXML
     TableColumn<DetalleVenta, Long> columnPrecio;
@@ -55,11 +57,14 @@ public class ModalVentaController {
     public void initialize(){
         columnID.setCellValueFactory(new PropertyValueFactory<>("IdDetalleVenta"));
         columnMaterial.setCellValueFactory(new PropertyValueFactory<>("IdMaterial"));
+        columnCantidad.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
         columnPeso.setCellValueFactory(new PropertyValueFactory<>("Peso"));
         columnPrecio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
 
-        listaDetalleVentas = loadListaDetalleVentas();
-        tableDetalleVentas.setItems(loadTableDetalleVentas());
+        if (venta != null) {
+            listaDetalleVentas = loadListaDetalleVentas();
+            tableDetalleVentas.setItems(loadTableDetalleVentas());
+        }
 
         tableDetalleVentas.setOnMouseClicked(event ->{
             if(!tableDetalleVentas.getSelectionModel().isEmpty()){
@@ -77,7 +82,13 @@ public class ModalVentaController {
         ArrayList<DetalleVenta> detalleVentas;
         detalleVentas = fileDetalleVentaManager.readLinesOfVenta();
 
-        return detalleVentas;
+        ArrayList<DetalleVenta> filteredDetalleVentas = new ArrayList<>();
+        for (DetalleVenta dv : detalleVentas) {
+            if (dv.getIdVenta() == venta.getIdVenta()) {
+                filteredDetalleVentas.add(dv);
+            }
+        }
+        return filteredDetalleVentas;
     }
 
     public ObservableList<DetalleVenta> loadTableDetalleVentas(){
@@ -90,7 +101,7 @@ public class ModalVentaController {
             long peso = detalleVenta.getPeso();
             long precio = detalleVenta.getPrecio();
 
-            DetalleVenta newDetalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio);
+            DetalleVenta newDetalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio, venta.getIdVenta());
             data.add(newDetalleVenta);
         });
 
@@ -115,7 +126,11 @@ public class ModalVentaController {
 
     public void setVenta(Venta venta){
         this.venta = venta;
+        // Refresh the table with the filtered details
+        listaDetalleVentas = loadListaDetalleVentas();
+        tableDetalleVentas.setItems(loadTableDetalleVentas());
     }
+
 
     @FXML
     public void handleBtnAniadir(){
@@ -126,7 +141,7 @@ public class ModalVentaController {
             long precio = Long.parseLong(inputPrecio.getText());
             int id = listaDetalleVentas.isEmpty() ? 1 : listaDetalleVentas.get(listaDetalleVentas.size() - 1).getIdDetalleVenta() + 1;
 
-            DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio);
+            DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio, venta.getIdVenta());
             listaDetalleVentas.add(detalleVenta);
             fileDetalleVentaManager.writeLine(detalleVenta);
 
@@ -143,7 +158,7 @@ public class ModalVentaController {
             long peso = Long.parseLong(inputPeso.getText());
             long precio = Long.parseLong(inputPrecio.getText());
 
-            DetalleVenta detalleVenta = new DetalleVenta(indice, idMaterial, cantidad, peso, precio);
+            DetalleVenta detalleVenta = new DetalleVenta(indice, idMaterial, cantidad, peso, precio, venta.getIdVenta());
             fileDetalleVentaManager.editLine(indice, detalleVenta);
             listaDetalleVentas = loadListaDetalleVentas();
             tableDetalleVentas.setItems(loadTableDetalleVentas());

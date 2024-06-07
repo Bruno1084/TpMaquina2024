@@ -14,7 +14,7 @@
         <columns>
           <TableColumn fx:id="columnID" maxWidth="85.0" minWidth="85.0" prefWidth="85.0" resizable="false" text="ID" />
             <TableColumn fx:id="columnMaterial" prefWidth="75.0" text="ID Material" />
-          <TableColumn fx:id="columnIdCantidad" prefWidth="75.0" text="Cantidad" />
+          <TableColumn fx:id="columnCantidad" prefWidth="75.0" text="Cantidad" />
             <TableColumn fx:id="columnPeso" prefWidth="75.0" text="Peso" />
             <TableColumn fx:id="columnPrecio" prefWidth="75.0" text="Precio" />
         </columns>

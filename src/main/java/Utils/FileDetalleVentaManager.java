@@ -55,20 +55,19 @@ public class FileDetalleVentaManager {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                if (!line.matches("\\d+\\{")) continue;
+                if (!line.trim().matches("\\d+\\{")) continue;
 
-                int idVenta = Integer.parseInt(line.split("\\{")[0].trim());
-                System.out.println("Id de venta: " + idVenta);
+                int idVenta = Integer.parseInt(line.trim().split("\\{")[0]);
 
-                while (!(line = bufferedReader.readLine()).equals("}")) {
-                    String[] splitLine = line.split(", ");
-                    int id = Integer.parseInt(splitLine[0]);
-                    int idMaterial = Integer.parseInt(splitLine[1]);
-                    int cantidad = Integer.parseInt(splitLine[2]);
-                    long peso = Long.parseLong(splitLine[3]);
-                    long precio = Long.parseLong(splitLine[4]);
+                while (!(line = bufferedReader.readLine()).trim().equals("}")) {
+                    String[] splitLine = line.trim().split(", ");
+                    int id = Integer.parseInt(splitLine[0].trim());
+                    int idMaterial = Integer.parseInt(splitLine[1].trim());
+                    int cantidad = Integer.parseInt(splitLine[2].trim());
+                    long peso = Long.parseLong(splitLine[3].trim());
+                    long precio = Long.parseLong(splitLine[4].trim());
 
-                    DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio);
+                    DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio, idVenta);
                     data.add(detalleVenta);
                 }
             }

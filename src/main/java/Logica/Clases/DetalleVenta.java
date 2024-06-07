@@ -2,18 +2,20 @@ package Logica.Clases;
 
 
 public class DetalleVenta {
-    public int idDetalleVenta;
+    private int idDetalleVenta;
     private int idMaterial;
     private int cantidad;
     private long peso;
     private long precio;
+    private int idVenta;
 
-    public DetalleVenta(int idDetalleVenta, int idMaterial, int cantidad, long peso, long precio) {
+    public DetalleVenta(int idDetalleVenta, int idMaterial, int cantidad, long peso, long precio, int idVenta) {
         this.idDetalleVenta = idDetalleVenta;
         this.idMaterial = idMaterial;
         this.cantidad = cantidad;
         this.peso = peso;
         this.precio = precio;
+        this.idVenta = idVenta;
     }
     public DetalleVenta(){}
 
@@ -54,10 +56,17 @@ public class DetalleVenta {
         this.precio = precio;
     }
 
+    public int getIdVenta() {
+        return idVenta;
+    }
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
+    }
+
     @Override
     public String toString(){
         return idDetalleVenta + ", " + idMaterial + ", " +
-                cantidad + ", " + peso + ", " + precio + "\n";
+                cantidad + ", " + peso + ", " + precio + ", " + idVenta + "\n";
     }
 }
 

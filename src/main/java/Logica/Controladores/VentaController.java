@@ -1,5 +1,4 @@
 package Logica.Controladores;
-import Logica.Clases.Empleado;
 import Logica.Clases.Venta;
 import Logica.Controladores.ModalControladores.ModalVentaController;
 import Utils.FileVentaManager;
@@ -147,7 +146,7 @@ public class VentaController {
             secondStage.setScene(new Scene(fxmlLoader.load()));
 
             ModalVentaController controller = fxmlLoader.getController();
-            controller.setVenta(venta);
+            controller.setVenta(venta); // Pasar la venta seleccionada al controlador del modal
 
             secondStage.setResizable(false);
             secondStage.show();
@@ -156,6 +155,8 @@ public class VentaController {
             exception.printStackTrace();
         }
     }
+
+
     @FXML
     public void handleBtnAniadir(){
         if (checkInputs()){
