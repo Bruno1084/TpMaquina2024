@@ -1,6 +1,7 @@
 package Logica.Controladores;
 import Logica.Clases.Venta;
 import Logica.Controladores.ModalControladores.ModalVentaController;
+import Utils.FileDetalleVentaManager;
 import Utils.FileVentaManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -196,6 +197,9 @@ public class VentaController {
             listaVentas = loadListaVentas();
             tableVentas.setItems(loadTableVentas());
             clearInputs();
+
+            //Deletes the set of lines with the same id on DetalleVenta.txt
+            FileDetalleVentaManager.deleteVentaGroup(selectedVenta.getIdVenta());
         }
     }
 

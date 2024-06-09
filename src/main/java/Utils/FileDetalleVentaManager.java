@@ -119,10 +119,16 @@ public class FileDetalleVentaManager {
     }
 
     public static void writeVentaWithDetails(int idVenta, ArrayList<DetalleVenta> listaDetalles){
-        ArrayList<DetalleVenta> allDetalleVentas = readLinesOfVenta();
-        allDetalleVentas.addAll(listaDetalles); // Add the new list of detalleVentas
-
-        writeAllLines(allDetalleVentas); // Write everything back to the file
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+            bufferedWriter.write(idVenta + "{\n");
+            for (DetalleVenta detalleVenta : listaDetalles) {
+                bufferedWriter.write(detalleVenta.toString());
+            }
+            bufferedWriter.write("}\n");
+        } catch (IOException e) {
+            System.out.println("Error on FileDetalleVentaManager writeVentaWithDetails method");
+            e.printStackTrace();
+        }
     }
 
     public static void editLine(int id, DetalleVenta detalleVenta){
@@ -140,6 +146,14 @@ public class FileDetalleVentaManager {
         ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
         listaDetalleVenta.removeIf(detalleVenta -> detalleVenta.getIdDetalleVenta() == id);
         writeAllLines(listaDetalleVenta);
+    }
+
+    public static void deleteVentaGroup(int idVenta) {
+        ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
+        listaDetalleVenta.removeIf(detalleVenta -> detalleVenta.getIdVenta() == idVenta);
+        writeAllLines(listaDetalleVenta);
+
+        System.out.println("Set of DetalleVentas deleted");
     }
 
     // Getters and Setters

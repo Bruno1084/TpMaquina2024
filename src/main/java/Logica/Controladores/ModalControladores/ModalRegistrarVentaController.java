@@ -83,6 +83,7 @@ public class ModalRegistrarVentaController {
                             DetalleVenta modalDetalleVenta = getTableView().getItems().get(getIndex());
                             tableDetalleVentas.getItems().remove(modalDetalleVenta);
                             tableDetalleVentas.refresh();
+                            listaDetalleVentas.remove(modalDetalleVenta);
                         });
                         setGraphic(editButton);
                         setText(null);
@@ -116,6 +117,8 @@ public class ModalRegistrarVentaController {
         inputIdProveedor.setText("");
         inputFechaVenta.setText("");
         inputDespachado.setText("");
+        inputProveedor.setText("");
+        tableDetalleVentas.getItems().clear();
     }
 
 
@@ -128,10 +131,10 @@ public class ModalRegistrarVentaController {
         int idVenta = listaVentas.size() +1;
 
         DetalleVenta detalleVenta = new DetalleVenta(idDetalle ++, idMaterial, cantidad, peso, precio, idVenta);
+        listaDetalleVentas.add(detalleVenta);
         tableDetalleVentas.getItems().add(detalleVenta);
-        System.out.println(detalleVenta);
 
-        //clearDetalleInputs();
+        clearDetalleInputs();
     }
 
     @FXML
@@ -145,7 +148,6 @@ public class ModalRegistrarVentaController {
         FileVentaManager.writeLine(venta);
         FileDetalleVentaManager.writeVentaWithDetails(idVenta, listaDetalleVentas);
 
-        System.out.println("handleBtnHacerCompra pressed");
-        //clearVentaInputs();
+        clearVentaInputs();
     }
 }
