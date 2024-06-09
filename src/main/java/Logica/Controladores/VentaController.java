@@ -44,9 +44,10 @@ public class VentaController {
     private Button btnEliminar;
     @FXML
     private Button btnEditar;
+    @FXML
+    private Button btnRegistrarVenta;
 
     // Other things
-    private final FileVentaManager fileVentaManager = new FileVentaManager("src/main/java/Permanencia/Venta.txt", "Venta");
     private ArrayList<Venta> listaVentas = new ArrayList<>();
     private static int indice = 0;
 
@@ -99,7 +100,7 @@ public class VentaController {
 
     public ArrayList<Venta> loadListaVentas(){
         ArrayList<Venta> data;
-        data = fileVentaManager.readAllLines();
+        data = FileVentaManager.readAllLines();
 
         return data;
     }
@@ -167,7 +168,7 @@ public class VentaController {
 
             Venta venta = new Venta(id, idProveedor, fechaVenta, isDespachado);
             listaVentas.add(venta);
-            fileVentaManager.writeLine(venta);
+            FileVentaManager.writeLine(venta);
 
             tableVentas.setItems(loadTableVentas());
             clearInputs();
@@ -181,7 +182,7 @@ public class VentaController {
             boolean isDespachado = Boolean.getBoolean(inputDespachado.getText());
 
             Venta venta = new Venta(indice, idProveedor, fechaVenta, isDespachado);
-            fileVentaManager.editLine(indice, venta);
+            FileVentaManager.editLine(indice, venta);
             listaVentas = loadListaVentas();
             tableVentas.setItems(loadTableVentas());
             clearInputs();
@@ -191,10 +192,24 @@ public class VentaController {
     public void handleBtnEliminar(){
         if (!tableVentas.getSelectionModel().isEmpty()) {
             Venta selectedVenta = tableVentas.getSelectionModel().getSelectedItem();
-            fileVentaManager.deleteLine(selectedVenta.getIdVenta());
+            FileVentaManager.deleteLine(selectedVenta.getIdVenta());
             listaVentas = loadListaVentas();
             tableVentas.setItems(loadTableVentas());
             clearInputs();
+        }
+    }
+
+    @FXML
+    public void handleBtnRegistrarVenta(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/ModalControladores/modalRegistrarVenta.fxml"));
+            Stage secondStage = new Stage();
+            secondStage.setScene(new Scene(fxmlLoader.load()));
+            secondStage.setResizable(false);
+            secondStage.show();
+        }catch (IOException exception){
+            System.out.println("Error on HandleBtnRegistrarVenta on VentaController");
+            exception.printStackTrace();
         }
     }
 }

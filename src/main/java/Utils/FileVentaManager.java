@@ -4,23 +4,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileVentaManager implements FileManagerUtils<Venta> {
-    private String path;
-    private String fileName;
-    private File file;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
+public class FileVentaManager{
+    private static String path;
+    private static String fileName;
+    private static File file;
 
-
-    public FileVentaManager(String path, String fileName){
-        this.path = path;
-        this.fileName = fileName;
-
+    static {
+        path = "src/main/java/Permanencia/";
+        fileName = "Venta.txt";
+        file = new File(path, fileName);
         createFile();
     }
 
-    private void createFile(){
-        this.file = new File(path);
+    private static void createFile(){
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -31,7 +27,7 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         }
     }
 
-    public String readLine(){
+    public static String readLine(){
         String line = "";
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -42,7 +38,7 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         return line;
     }
 
-    public String[] readLineAsArray(){
+    public static String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line = bufferedReader.readLine();
@@ -55,7 +51,7 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         return arrayLine;
     }
 
-    public ArrayList<Venta> readAllLines(){
+    public static ArrayList<Venta> readAllLines(){
         ArrayList<Venta> data = new ArrayList<>();
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -79,7 +75,7 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         return data;
     }
 
-    public void writeAllLines(ArrayList<Venta> listaVentas){
+    public static void writeAllLines(ArrayList<Venta> listaVentas){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Venta vent : listaVentas){
                 bufferedWriter.write(vent.toString());
@@ -90,7 +86,7 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         }
     }
 
-    public void writeLine(Venta venta){
+    public static void writeLine(Venta venta){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(venta.toString());
         } catch (IOException e) {
@@ -99,7 +95,7 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         }
     }
 
-    public void editLine(int id, Venta venta){
+    public static void editLine(int id, Venta venta){
         ArrayList<Venta> listaVentas = readAllLines();
         for (int i = 0; i < listaVentas.size(); i++) {
             if (listaVentas.get(i).getIdVenta() == id) {
@@ -110,45 +106,60 @@ public class FileVentaManager implements FileManagerUtils<Venta> {
         writeAllLines(listaVentas);
     }
 
-    public void deleteLine(int id) {
+    public static void deleteLine(int id) {
         ArrayList<Venta> listaVentas = readAllLines();
         listaVentas.removeIf(venta -> venta.getIdVenta() == id);
         writeAllLines(listaVentas);
     }
 
+    public static Venta getVentaById(int id) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String fileLine = bufferedReader.readLine();
+
+            while (fileLine != null) {
+                String[] splitLine = fileLine.split(", ");
+                int idVenta = Integer.parseInt(splitLine[0]);
+
+                if (idVenta == id) {
+                    int idProveedor = Integer.parseInt(splitLine[1]);
+                    String fechaVenta = splitLine[2];
+                    boolean isDespachado = Boolean.parseBoolean(splitLine[3]);
+
+                    return new Venta(idVenta, idProveedor, fechaVenta, isDespachado);
+                }
+                fileLine = bufferedReader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
     // Getters and Setters
     public String getPath() {
         return path;
     }
-    public void setPath(String path) {
-        this.path = path;
+    public static void setPath(String newPath) {
+        path = newPath;
+        file = new File(path, fileName);
+        createFile();
     }
 
     public String getFileName() {
         return fileName;
     }
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public static void setFileName(String newFileName) {
+        fileName = newFileName;
+        file = new File(path, fileName);
+        createFile();
     }
 
     public File getFile() {
         return file;
     }
     public void setFile(File file) {
-        this.file = file;
-    }
-
-    public FileReader getFileReader() {
-        return fileReader;
-    }
-    public void setFileReader(FileReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
+        FileVentaManager.file = file;
     }
 }

@@ -1,12 +1,10 @@
 package Logica.Clases;
-import java.util.List;
 
 
 public class Venta {
     private int idVenta;
     private int idProveedor;
     private String fechaVenta;
-    List<DetalleVenta> materialesDetalle;
     private boolean despachado;
 
     public Venta(int idVenta, int idProveedor, String fechaVenta, boolean despachado) {
@@ -37,13 +35,6 @@ public class Venta {
     }
     public void setFechaVenta(String fechaVenta) {
         this.fechaVenta = fechaVenta;
-    }
-
-    public List<DetalleVenta> getMaterialesDetalle() {
-        return materialesDetalle;
-    }
-    public void setMaterialesDetalle(List<DetalleVenta> materialesDetalle) {
-        this.materialesDetalle = materialesDetalle;
     }
 
     public boolean isDespachado() {

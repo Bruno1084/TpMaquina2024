@@ -1,5 +1,4 @@
 1, 4625527526, Bruno Sosa, San Martin 453, 652752652, 25325, 01/04/23, true
 2, 5651161, Jonhn Doe, Street 3552, 7642642645, 6624, 13/02/23, false
-3, 5651161, Juan Doe, Street 3552, 7642642645, 6624, 01/24/23, false
 7, 5651161, Jonhn Doe, Street 3552, 7642642645, 6624, 01/24/23, true
 8, 5651161, Jonhn Doe, Street 3552, 7642642645, 6624, 01/24/23, false

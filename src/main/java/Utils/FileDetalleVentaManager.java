@@ -5,9 +5,16 @@ import java.util.ArrayList;
 
 
 public class FileDetalleVentaManager {
-    private String path;
-    private String fileName;
-    private File file;
+    private static String path;
+    private static String fileName;
+    private static File file;
+
+    static {
+        path = "src/main/java/Permanencia/";
+        fileName = "DetalleVenta.txt";
+        file = new File(path, fileName);
+        createFile();
+    }
 
     public FileDetalleVentaManager(String path, String fileName){
         this.path = path;
@@ -15,8 +22,7 @@ public class FileDetalleVentaManager {
         createFile();
     }
 
-    private void createFile(){
-        this.file = new File(path);
+    private static void createFile(){
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -27,7 +33,7 @@ public class FileDetalleVentaManager {
         }
     }
 
-    public String readLine(){
+    public static String readLine(){
         String line = "";
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             line = bufferedReader.readLine();
@@ -37,7 +43,7 @@ public class FileDetalleVentaManager {
         return line;
     }
 
-    public String[] readLineAsArray(){
+    public static String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line = bufferedReader.readLine();
@@ -50,7 +56,7 @@ public class FileDetalleVentaManager {
         return arrayLine;
     }
 
-    public ArrayList<DetalleVenta> readLinesOfVenta(){
+    public static ArrayList<DetalleVenta> readLinesOfVenta(){
         ArrayList<DetalleVenta> data = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -77,10 +83,25 @@ public class FileDetalleVentaManager {
         return data;
     }
 
-    public void writeAllLines(ArrayList<DetalleVenta> listaDetalleVentas){
+    public static void writeAllLines(ArrayList<DetalleVenta> listaDetalleVentas){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
-            for (DetalleVenta detalleVenta : listaDetalleVentas){
-                bufferedWriter.write(detalleVenta.toString() + "\n");
+            int currentIdVenta = -1;
+            for (DetalleVenta detalleVenta : listaDetalleVentas) {
+                if (detalleVenta.getIdVenta() != currentIdVenta) {
+                    if (currentIdVenta != -1) {
+                        bufferedWriter.write("}\n");
+                    }
+                    currentIdVenta = detalleVenta.getIdVenta();
+                    bufferedWriter.write(currentIdVenta + "{\n");
+                }
+                bufferedWriter.write(detalleVenta.getIdDetalleVenta() + ", " +
+                        detalleVenta.getIdMaterial() + ", " +
+                        detalleVenta.getCantidad() + ", " +
+                        detalleVenta.getPeso() + ", " +
+                        detalleVenta.getPrecio() + "\n");
+            }
+            if (currentIdVenta != -1) {
+                bufferedWriter.write("}\n");
             }
         } catch (IOException e) {
             System.out.println("Error on FileDetalleVentaManager writeAllLines method");
@@ -88,16 +109,23 @@ public class FileDetalleVentaManager {
         }
     }
 
-    public void writeLine(DetalleVenta detalleVenta){
+    public static void writeLine(DetalleVenta detalleVenta){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
-            bufferedWriter.write(detalleVenta.toString() + "\n");
+            bufferedWriter.write(detalleVenta.toString());
         } catch (IOException e) {
             System.out.println("Error on FileDetalleVentaManager writeLine method");
             e.printStackTrace();
         }
     }
 
-    public void editLine(int id, DetalleVenta detalleVenta){
+    public static void writeVentaWithDetails(int idVenta, ArrayList<DetalleVenta> listaDetalles){
+        ArrayList<DetalleVenta> allDetalleVentas = readLinesOfVenta();
+        allDetalleVentas.addAll(listaDetalles); // Add the new list of detalleVentas
+
+        writeAllLines(allDetalleVentas); // Write everything back to the file
+    }
+
+    public static void editLine(int id, DetalleVenta detalleVenta){
         ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
         for (int i = 0; i < listaDetalleVenta.size(); i++) {
             if (listaDetalleVenta.get(i).getIdDetalleVenta() == id) {
@@ -108,7 +136,7 @@ public class FileDetalleVentaManager {
         writeAllLines(listaDetalleVenta);
     }
 
-    public void deleteLine(int id) {
+    public static void deleteLine(int id) {
         ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
         listaDetalleVenta.removeIf(detalleVenta -> detalleVenta.getIdDetalleVenta() == id);
         writeAllLines(listaDetalleVenta);

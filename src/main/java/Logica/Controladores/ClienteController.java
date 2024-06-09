@@ -25,6 +25,8 @@ public class ClienteController {
     private TableColumn<Cliente, Long> columnTelefono;
     @FXML
     private TableColumn<Cliente, Boolean> columnAlta;
+    @FXML
+    private TableColumn<Cliente, Integer> columnCantCompras;
 
     // Form inputs
     @FXML
@@ -35,6 +37,8 @@ public class ClienteController {
     private TextField inputDireccion;
     @FXML
     private TextField inputTelefono;
+    @FXML
+    private TextField inputCantCompras;
 
     // Tab buttons
     @FXML
@@ -59,6 +63,7 @@ public class ClienteController {
         columnDireccion.setCellValueFactory(new PropertyValueFactory<>("Direccion"));
         columnTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
         columnAlta.setCellValueFactory(new PropertyValueFactory<>("Alta"));
+        columnCantCompras.setCellValueFactory(new PropertyValueFactory<>("CantCompras"));
 
         listaClientes = loadListaClientes();
         tableClientes.setItems(loadTableClientes());
@@ -71,6 +76,8 @@ public class ClienteController {
                 inputDireccion.setText(cliente.getDireccion());
                 inputTelefono.setText(String.valueOf(cliente.getTelefono()));
                 inputAlta.setSelected(cliente.getAlta());
+                inputCantCompras.setText(String.valueOf(cliente.getCantCompras()));
+
                 indice = cliente.getId();
             }
         });
@@ -93,8 +100,9 @@ public class ClienteController {
             String direccion = cliente.getDireccion();
             long telefono = cliente.getTelefono();
             boolean alta = cliente.getAlta();
+            int cantCompra = cliente.getCantCompras();
 
-            Cliente newCliente = new Cliente(id, dni, nombre, direccion, telefono, alta);
+            Cliente newCliente = new Cliente(id, dni, nombre, direccion, telefono, alta, cantCompra);
             data.add(newCliente);
         });
 
@@ -111,11 +119,12 @@ public class ClienteController {
         inputDireccion.setText("");
         inputTelefono.setText("");
         inputAlta.setSelected(false);
+        inputCantCompras.setText("");
     }
 
     public boolean checkInputs(){
         if(inputDni.getText().isEmpty() || inputNombre.getText().isEmpty() ||
-                inputDireccion.getText().isEmpty() || inputTelefono.getText().isEmpty()) {
+                inputDireccion.getText().isEmpty() || inputTelefono.getText().isEmpty() || inputCantCompras.getText().isEmpty()) {
             System.out.println("There is an empty input");
             return false;
         }
@@ -130,9 +139,10 @@ public class ClienteController {
             String direccion = inputDireccion.getText();
             long telefono = Long.parseLong(inputTelefono.getText());
             boolean alta = inputAlta.isSelected();
+            int cantCompra = Integer.parseInt(inputCantCompras.getText());
             int id = listaClientes.isEmpty() ? 1 : listaClientes.get(listaClientes.size() - 1).getId() + 1;
 
-            Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono, alta);
+            Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono, alta, cantCompra);
             listaClientes.add(cliente);
             fileClienteManager.writeLine(cliente);
 
@@ -149,8 +159,9 @@ public class ClienteController {
             String direccion = inputDireccion.getText();
             long telefono = Long.parseLong(inputTelefono.getText());
             boolean alta = inputAlta.isSelected();
+            int cantCompras = Integer.parseInt(inputCantCompras.getText());
 
-            Cliente cliente = new Cliente(indice, dni, nombre, direccion, telefono, alta);
+            Cliente cliente = new Cliente(indice, dni, nombre, direccion, telefono, alta, cantCompras);
             fileClienteManager.editLine(indice, cliente);
             listaClientes = loadListaClientes();
             tableClientes.setItems(loadTableClientes());

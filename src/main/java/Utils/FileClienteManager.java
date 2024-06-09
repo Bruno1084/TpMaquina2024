@@ -69,8 +69,9 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
                 String direccion = splitLine[3];
                 long telefono = Long.parseLong(splitLine[4]);
                 boolean alta = Boolean.parseBoolean(splitLine[5]);
+                int cantVentas = Integer.parseInt(splitLine[6]);
 
-                Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono, alta);
+                Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono, alta, cantVentas);
                 data.add(cliente);
 
                 fileLine = bufferedReader.readLine();
