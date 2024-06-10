@@ -1,10 +1,13 @@
 package Logica.Controladores.ModalControladores;
 import Logica.Clases.*;
 import Utils.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
+import Utils.CustomMenuItem;
 
 
 public class ModalRegistrarCompraController {
@@ -24,6 +27,8 @@ public class ModalRegistrarCompraController {
 
     // Compra inputs
     @FXML
+    private TextField inputMaterial;
+    @FXML
     private TextField inputIdMaterial;
     @FXML
     private TextField inputCantidad;
@@ -31,6 +36,8 @@ public class ModalRegistrarCompraController {
     private TextField inputPrecio;
     @FXML
     private TextField inputPeso;
+    @FXML
+    private ContextMenu contextMaterial;
 
     // Compra object inputs
     @FXML
@@ -41,6 +48,18 @@ public class ModalRegistrarCompraController {
     private TextField inputPagado;
     @FXML
     private TextField inputIdEmpleado;
+    @FXML
+    private TextField inputPrecioTotal;
+    @FXML
+    private ContextMenu contextCliente;
+    @FXML
+    private ContextMenu contextEmpleado;
+
+    @FXML
+    private TextField inputNombreCliente;
+    @FXML
+    private TextField inputNombreEmpleado;
+
 
     // Buttons
     @FXML
@@ -51,6 +70,8 @@ public class ModalRegistrarCompraController {
     // Lists
     private ArrayList<Compra> listaCompras = FileCompraManager.readAllLines();
     private ArrayList<Material> listaMaterial = FileMaterialManager.readAllLines();
+    private ArrayList<Cliente> listaClientes = FileClienteManager.readAllLines();
+    private ArrayList<Empleado> listaEmpleados = FileEmpleadoManager.readAllLines();
     private ArrayList<DetalleCompra> listaDetalleCompras = new ArrayList<>();
     private static int idDetalle = 1;
     private static int indice = 0;
@@ -110,8 +131,64 @@ public class ModalRegistrarCompraController {
         inputIdCliente.setText("");
         inputPagado.setText("");
         inputIdEmpleado.setText("");
+        inputPrecioTotal.setText("");
 
         tableDetalleCompra.getItems().clear();
+    }
+
+    @FXML
+    public void handleInputMaterial(){
+        contextMaterial.getItems().clear();
+
+        for(Material material : listaMaterial){
+            CustomMenuItem customMenuItem = new CustomMenuItem(material.getNombre(), material);
+
+            customMenuItem.setOnAction(event -> {
+                inputIdMaterial.setText(String.valueOf(material.getId()));
+                inputPrecio.setText(String.valueOf(material.getPrecioCompra()));
+                inputMaterial.setText(material.getNombre());
+            });
+            contextMaterial.getItems().add(customMenuItem);
+        }
+        contextMaterial.show(inputMaterial, Side.BOTTOM, 0, 0);
+
+    }
+
+    public void handleInputIdCliente(){
+        contextCliente.getItems().clear();
+
+        for(Cliente cliente : listaClientes){
+            CustomMenuItem customMenuItem = new CustomMenuItem(String.valueOf(cliente.getId()), cliente);
+
+            customMenuItem.setOnAction(event -> {
+                inputIdCliente.setText(String.valueOf(cliente.getId()));
+                inputNombreCliente.setText(cliente.getNombre());
+            });
+            contextCliente.getItems().add(customMenuItem);
+        }
+        contextCliente.show(inputIdCliente, Side.BOTTOM, 0, 0);
+    }
+
+    public void handleInputIdEmpleado(){
+        contextEmpleado.getItems().clear();
+
+        for(Empleado empleado : listaEmpleados){
+            CustomMenuItem customMenuItem = new CustomMenuItem(String.valueOf(empleado.getId()), empleado);
+
+            customMenuItem.setOnAction(event -> {
+                inputIdEmpleado.setText(String.valueOf(empleado.getId()));
+                inputNombreEmpleado.setText(empleado.getNombre());
+            });
+            contextEmpleado.getItems().add(customMenuItem);
+        }
+        contextEmpleado.show(inputIdEmpleado, Side.BOTTOM, 0, 0);
+    }
+
+    @FXML
+    public void handleCalcularPrecio(){
+        ObservableList<DetalleCompra> data = tableDetalleCompra.getItems();
+        long precioFinal = data.stream().mapToLong(material -> (long) (material.getCantidad() * material.getPeso() * material.getPrecio())).sum();
+        inputPrecioTotal.setText(String.valueOf(precioFinal));
     }
 
     @FXML
@@ -127,6 +204,7 @@ public class ModalRegistrarCompraController {
         tableDetalleCompra.getItems().add(detalleCompra);
 
         clearDetalleInputs();
+        handleCalcularPrecio();
     }
 
     @FXML

@@ -1,15 +1,11 @@
 package Logica.Controladores.ModalControladores;
 import Logica.Clases.DetalleVenta;
-import Logica.Clases.Empleado;
 import Logica.Clases.Venta;
 import Utils.FileDetalleVentaManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 
@@ -49,7 +45,6 @@ public class ModalVentaController {
 
     // Other things
     private Venta venta;
-    private final FileDetalleVentaManager fileDetalleVentaManager = new FileDetalleVentaManager("src/main/java/Permanencia/DetalleVenta.txt", "DetalleVenta");
     private ArrayList<DetalleVenta> listaDetalleVentas = new ArrayList<>();
     private static int indice = 0;
 
@@ -80,7 +75,7 @@ public class ModalVentaController {
 
     public ArrayList<DetalleVenta> loadListaDetalleVentas(){
         ArrayList<DetalleVenta> detalleVentas;
-        detalleVentas = fileDetalleVentaManager.readLinesOfVenta();
+        detalleVentas = FileDetalleVentaManager.readLinesOfVenta();
 
         ArrayList<DetalleVenta> filteredDetalleVentas = new ArrayList<>();
         for (DetalleVenta dv : detalleVentas) {
@@ -143,7 +138,7 @@ public class ModalVentaController {
 
             DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio, venta.getIdVenta());
             listaDetalleVentas.add(detalleVenta);
-            fileDetalleVentaManager.writeLine(detalleVenta);
+            FileDetalleVentaManager.writeLine(detalleVenta);
 
             tableDetalleVentas.setItems(loadTableDetalleVentas());
             clearInputs();
@@ -159,7 +154,7 @@ public class ModalVentaController {
             long precio = Long.parseLong(inputPrecio.getText());
 
             DetalleVenta detalleVenta = new DetalleVenta(indice, idMaterial, cantidad, peso, precio, venta.getIdVenta());
-            fileDetalleVentaManager.editLine(indice, detalleVenta);
+            FileDetalleVentaManager.editLine(indice, detalleVenta);
             listaDetalleVentas = loadListaDetalleVentas();
             tableDetalleVentas.setItems(loadTableDetalleVentas());
             clearInputs();
@@ -170,7 +165,7 @@ public class ModalVentaController {
     public void handleBtnEliminar(){
         if (!tableDetalleVentas.getSelectionModel().isEmpty()) {
             DetalleVenta selectedDetalleVenta = tableDetalleVentas.getSelectionModel().getSelectedItem();
-            fileDetalleVentaManager.deleteLine(selectedDetalleVenta.getIdDetalleVenta());
+            FileDetalleVentaManager.deleteLine(selectedDetalleVenta.getIdDetalleVenta());
             listaDetalleVentas = loadListaDetalleVentas();
             tableDetalleVentas.setItems(loadTableDetalleVentas());
             clearInputs();

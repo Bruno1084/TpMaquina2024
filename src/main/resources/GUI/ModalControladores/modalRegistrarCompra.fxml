@@ -34,19 +34,33 @@
                 </font>
             </Button>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text layoutX="310.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio:">
+            <Text layoutX="516.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio:">
                 <font>
                     <Font size="14.0" />
                 </font>
             </Text>
-            <TextField fx:id="inputPrecio" layoutX="355.0" layoutY="20.0" prefHeight="25.0" prefWidth="120.0" />
+            <TextField fx:id="inputPrecio" layoutX="565.0" layoutY="20.0" prefHeight="25.0" prefWidth="120.0" />
             <ListView layoutX="375.0" layoutY="44.0" prefHeight="148.0" prefWidth="149.0" style="-fx-border-style: solid; visibility: false;" />
-            <Text layoutX="314.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Peso:">
+            <Text layoutX="287.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Peso:">
                 <font>
                     <Font size="14.0" />
                 </font>
             </Text>
-            <TextField fx:id="inputPeso" layoutX="352.0" layoutY="67.0" prefHeight="25.0" prefWidth="126.0" />
+            <TextField fx:id="inputPeso" layoutX="324.0" layoutY="67.0" prefHeight="25.0" prefWidth="126.0" />
+         <Text layoutX="287.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Material:">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <TextField fx:id="inputMaterial" layoutX="348.0" layoutY="22.0" onKeyReleased="#handleInputMaterial" prefHeight="25.0" prefWidth="120.0">
+            <contextMenu>
+               <ContextMenu fx:id="contextMaterial">
+                 <items>
+                   <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                 </items>
+               </ContextMenu>
+            </contextMenu>
+         </TextField>
         </Pane>
         <TableView fx:id="tableDetalleCompra" prefHeight="330.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
             <columns>
@@ -61,39 +75,36 @@
             </columnResizePolicy>
         </TableView>
         <Pane maxHeight="1.7976931348623157E308" prefHeight="134.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-            <Text layoutX="14.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Empleado:">
+            <Text layoutX="14.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id:">
                 <font>
                     <Font size="15.0" />
                 </font>
             </Text>
-            <Text layoutX="302.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha:">
+            <Text layoutX="381.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha:">
                 <font>
                     <Font size="14.0" />
                 </font>
             </Text>
-            <Button fx:id="btnHacerCompra" layoutX="600.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleBtnHacerCompra" text="Hacer Compra">
+            <Button fx:id="btnHacerCompra" layoutX="634.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleBtnHacerCompra" text="Hacer Compra">
                 <font>
                     <Font size="14.0" />
                 </font>
             </Button>
-            <TextField fx:id="inputIdEmpleado" layoutX="109.0" layoutY="52.0" prefHeight="25.0" prefWidth="88.0" />
-            <TextField fx:id="inputIdCliente" layoutX="92.0" layoutY="20.0" prefHeight="25.0" prefWidth="99.0">
-                <contextMenu>
-                    <ContextMenu />
-                </contextMenu></TextField>
-            <TextField fx:id="inputFechaVenta" layoutX="349.0" layoutY="13.0" prefHeight="25.0" prefWidth="114.0" />
-            <Text layoutX="302.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pagado:">
+            <TextField fx:id="inputIdEmpleado" layoutX="41.0" layoutY="53.0" onKeyReleased="#handleInputIdEmpleado" prefHeight="25.0" prefWidth="32.0" />
+            <TextField fx:id="inputIdCliente" layoutX="40.0" layoutY="24.0" onKeyReleased="#handleInputIdCliente" prefHeight="25.0" prefWidth="34.0" />
+            <TextField fx:id="inputFechaVenta" layoutX="439.0" layoutY="15.0" prefHeight="25.0" prefWidth="114.0" />
+            <Text layoutX="375.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pagado:">
                 <font>
                     <Font size="14.0" />
                 </font>
             </Text>
-            <TextField fx:id="inputPagado" layoutX="363.0" layoutY="51.0" prefHeight="25.0" prefWidth="107.0" />
+            <TextField fx:id="inputPagado" layoutX="446.0" layoutY="50.0" prefHeight="25.0" prefWidth="107.0" />
             <Text layoutX="600.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
                 <font>
                     <Font size="14.0" />
                 </font>
             </Text>
-            <TextField fx:id="inputPrecioTotal" layoutX="641.0" layoutY="16.0" prefHeight="25.0" prefWidth="114.0">
+            <TextField fx:id="inputPrecioTotal" layoutX="650.0" layoutY="16.0" prefHeight="25.0" prefWidth="114.0">
                 <contextMenu>
                     <ContextMenu>
                         <items>
@@ -103,11 +114,35 @@
                     </ContextMenu>
                 </contextMenu>
             </TextField>
-         <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id Cliente:">
+         <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id:">
             <font>
                <Font size="15.0" />
             </font>
          </Text>
+         <Text layoutX="105.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente:">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <Text layoutX="103.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empleado:">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Text>
+         <TextField fx:id="inputNombreCliente" layoutX="160.0" layoutY="24.0" prefHeight="25.0" prefWidth="114.0">
+            <contextMenu>
+                    <ContextMenu fx:id="contextCliente" />
+            </contextMenu>
+         </TextField>
+         <TextField fx:id="inputNombreEmpleado" layoutX="176.0" layoutY="53.0" prefHeight="25.0" prefWidth="114.0">
+            <contextMenu>
+               <ContextMenu fx:id="contextEmpleado">
+                 <items>
+                   <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                 </items>
+               </ContextMenu>
+            </contextMenu>
+         </TextField>
         </Pane>
     </VBox>
 </AnchorPane>

@@ -4,22 +4,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
-    private String path;
-    private String fileName;
-    private File file;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
+public class FileEmpleadoManager{
+    private static String path;
+    private static String fileName;
+    private static File file;
 
-    public FileEmpleadoManager(String path, String fileName){
-        this.path = path;
-        this.fileName = fileName;
 
+    static {
+        path = "src/main/java/Permanencia/";
+        fileName = "Empleado.txt";
+        file = new File(path, fileName);
         createFile();
     }
-
-    private void createFile(){
-        this.file = new File(path);
+    private static void createFile(){
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -30,7 +27,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         }
     }
 
-    public String readLine(){
+    public static String readLine(){
         String line = "";
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -41,7 +38,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         return line;
     }
 
-    public String[] readLineAsArray(){
+    public static String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line = bufferedReader.readLine();
@@ -54,7 +51,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         return arrayLine;
     }
 
-    public ArrayList<Empleado> readAllLines(){
+    public static ArrayList<Empleado> readAllLines(){
         ArrayList<Empleado> data = new ArrayList<>();
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -82,7 +79,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         return data;
     }
 
-    public void writeAllLines(ArrayList<Empleado> listaEmpleados){
+    public static void writeAllLines(ArrayList<Empleado> listaEmpleados){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Empleado emp : listaEmpleados){
                 bufferedWriter.write(emp.toString());
@@ -93,7 +90,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         }
     }
 
-    public void writeLine(Empleado empleado){
+    public static void writeLine(Empleado empleado){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(empleado.toString());
         } catch (IOException e) {
@@ -102,7 +99,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         }
     }
 
-    public void editLine(int id, Empleado empleado){
+    public static void editLine(int id, Empleado empleado){
         ArrayList<Empleado> listaEmpleados = readAllLines();
         for (int i = 0; i < listaEmpleados.size(); i++) {
             if (listaEmpleados.get(i).getId() == id) {
@@ -113,7 +110,7 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
         writeAllLines(listaEmpleados);
     }
 
-    public void deleteLine(int id) {
+    public static void deleteLine(int id) {
         ArrayList<Empleado> listaEmpleados = readAllLines();
         listaEmpleados.removeIf(empleado -> empleado.getId() == id);
         writeAllLines(listaEmpleados);
@@ -139,19 +136,5 @@ public class FileEmpleadoManager implements FileManagerUtils<Empleado>{
     }
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public FileReader getFileReader() {
-        return fileReader;
-    }
-    public void setFileReader(FileReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
     }
 }

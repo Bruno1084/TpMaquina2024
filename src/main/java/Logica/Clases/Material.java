@@ -6,10 +6,10 @@ public class Material {
     private String descripcion;
     private String tipoMedida;
     private int stock;
-    private float precioCompra;
-    private float precioVenta;
+    private long precioCompra;
+    private long precioVenta;
 
-    public Material(int id, String nombre, String descripcion, String tipoMedida, int stock, float precioCompra, float precioVenta){
+    public Material(int id, String nombre, String descripcion, String tipoMedida, int stock, long precioCompra, long precioVenta){
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -57,17 +57,17 @@ public class Material {
         this.stock = stock;
     }
 
-    public float getPrecioCompra() {
+    public long getPrecioCompra() {
         return precioCompra;
     }
-    public void setPrecioCompra(float precioCompra) {
+    public void setPrecioCompra(long precioCompra) {
         this.precioCompra = precioCompra;
     }
 
-    public float getPrecioVenta() {
+    public long getPrecioVenta() {
         return precioVenta;
     }
-    public void setPrecioVenta(float precioVenta) {
+    public void setPrecioVenta(long precioVenta) {
         this.precioVenta = precioVenta;
     }
 

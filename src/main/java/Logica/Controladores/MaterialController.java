@@ -96,8 +96,8 @@ public class MaterialController {
             String descripcion = material.getDescripcion();
             String tipoMedida = material.getTipoMedida();
             int stock = material.getStock();
-            float precioVenta = material.getPrecioVenta();
-            float precioCompra = material.getPrecioCompra();
+            long precioVenta = material.getPrecioVenta();
+            long precioCompra = material.getPrecioCompra();
 
             Material newMaterial = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
             data.add(newMaterial);
@@ -136,8 +136,8 @@ public class MaterialController {
             String descripcion = inputDescripcion.getText();
             String tipoMedida = inputTipoMedida.getText();
             int stock = Integer.parseInt(inputStock.getText());
-            float precioCompra = Float.parseFloat(inputPrecioCompra.getText());
-            float precioVenta = Float.parseFloat(inputPrecioVenta.getText());
+            long precioCompra = Long.parseLong(inputPrecioCompra.getText());
+            long precioVenta = Long.parseLong(inputPrecioVenta.getText());
             int id = listaMateriales.isEmpty() ? 1 : listaMateriales.get(listaMateriales.size() - 1).getId() + 1;
 
             Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
@@ -155,8 +155,8 @@ public class MaterialController {
             String descripcion = inputDescripcion.getText();
             String tipoMedida = inputTipoMedida.getText();
             int stock = Integer.parseInt(inputStock.getText());
-            float precioCompra = Float.parseFloat(inputPrecioCompra.getText());
-            float precioVenta = Float.parseFloat(inputPrecioVenta.getText());
+            long precioCompra = Long.parseLong(inputPrecioCompra.getText());
+            long precioVenta = Long.parseLong(inputPrecioVenta.getText());
 
             Material material = new Material(indice, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
             FileMaterialManager.editLine(indice, material);

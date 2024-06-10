@@ -16,12 +16,6 @@ public class FileDetalleVentaManager {
         createFile();
     }
 
-    public FileDetalleVentaManager(String path, String fileName){
-        this.path = path;
-        this.fileName = fileName;
-        createFile();
-    }
-
     private static void createFile(){
         if (!file.exists()) {
             try {
@@ -94,11 +88,7 @@ public class FileDetalleVentaManager {
                     currentIdVenta = detalleVenta.getIdVenta();
                     bufferedWriter.write(currentIdVenta + "{\n");
                 }
-                bufferedWriter.write(detalleVenta.getIdDetalleVenta() + ", " +
-                        detalleVenta.getIdMaterial() + ", " +
-                        detalleVenta.getCantidad() + ", " +
-                        detalleVenta.getPeso() + ", " +
-                        detalleVenta.getPrecio() + "\n");
+                bufferedWriter.write(detalleVenta.toString());
             }
             if (currentIdVenta != -1) {
                 bufferedWriter.write("}\n");

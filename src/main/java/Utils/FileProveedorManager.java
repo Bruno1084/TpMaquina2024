@@ -4,23 +4,20 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileProveedorManager implements FileManagerUtils<Proveedor>{
-    private String path;
-    private String fileName;
-    private File file;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
+public class FileProveedorManager{
+    private static String path;
+    private static String fileName;
+    private static File file;
 
 
-    public FileProveedorManager(String path, String fileName){
-        this.path = path;
-        this.fileName = fileName;
-
+    static {
+        path = "src/main/java/Permanencia/";
+        fileName = "Proveedor.txt";
+        file = new File(path, fileName);
         createFile();
     }
 
-    public void createFile(){
-        this.file = new File(path);
+    public static void createFile(){
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -31,7 +28,7 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
         }
     }
 
-    public String readLine(){
+    public static String readLine(){
         String line = "";
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -42,7 +39,7 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
         return line;
     }
 
-    public String[] readLineAsArray(){
+    public static String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line = bufferedReader.readLine();
@@ -55,7 +52,7 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
         return arrayLine;
     }
 
-    public ArrayList<Proveedor> readAllLines(){
+    public static ArrayList<Proveedor> readAllLines(){
         ArrayList<Proveedor> data = new ArrayList<>();
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -82,7 +79,7 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
         return data;
     }
 
-    public void writeAllLines(ArrayList<Proveedor> listaEmpleados){
+    public static void writeAllLines(ArrayList<Proveedor> listaEmpleados){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Proveedor prov : listaEmpleados){
                 bufferedWriter.write(prov.toString());
@@ -93,7 +90,7 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
         }
     }
 
-    public void writeLine(Proveedor proveedor){
+    public static void writeLine(Proveedor proveedor){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(proveedor.toString());
             bufferedWriter.newLine();
@@ -103,7 +100,7 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
         }
     }
 
-    public void editLine(int id, Proveedor proveedor){
+    public static void editLine(int id, Proveedor proveedor){
         ArrayList<Proveedor> listaProveedores = readAllLines();
         for (int i = 0; i < listaProveedores.size(); i++) {
             if (listaProveedores.get(i).getId() == id) {
@@ -135,19 +132,5 @@ public class FileProveedorManager implements FileManagerUtils<Proveedor>{
     }
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public FileReader getFileReader() {
-        return fileReader;
-    }
-    public void setFileReader(FileReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
     }
 }

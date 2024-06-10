@@ -65,8 +65,8 @@ public class FileMaterialManager{
                 String descripcion = splitLine[2];
                 String tipoMedida = splitLine[3];
                 int stock = Integer.parseInt(splitLine[4]);
-                float precioCompra = Float.parseFloat(splitLine[5]);
-                float precioVenta = Float.parseFloat(splitLine[6]);
+                long precioCompra = Long.parseLong(splitLine[5]);
+                long precioVenta = Long.parseLong(splitLine[6]);
 
                 Material material = new Material(id, nombre, descripcion, tipoMedida, stock, precioCompra, precioVenta);
                 data.add(material);

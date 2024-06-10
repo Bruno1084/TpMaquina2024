@@ -1,5 +1,4 @@
 package Logica.Controladores;
-import Logica.Clases.Empleado;
 import Logica.Clases.Proveedor;
 import Utils.FileProveedorManager;
 import javafx.collections.FXCollections;
@@ -55,7 +54,6 @@ public class ProveedorController {
     private Button btnEditar;
 
     // Other things
-    private final FileProveedorManager fileProveedorManager = new FileProveedorManager("src/main/java/Permanencia/Proveedor.txt", "Proveedor");
     private ArrayList<Proveedor> listaProveedores = new ArrayList<>();
     private static int indice = 0;
 
@@ -88,7 +86,7 @@ public class ProveedorController {
 
     public ArrayList<Proveedor> loadListaProveedores(){
         ArrayList<Proveedor> proveedor;
-        proveedor = fileProveedorManager.readAllLines();
+        proveedor = FileProveedorManager.readAllLines();
 
         return proveedor;
     }
@@ -148,7 +146,7 @@ public class ProveedorController {
 
             Proveedor proveedor = new Proveedor(id, dni, nombre, direccion, telefono, cuil, ciudad);
             listaProveedores.add(proveedor);
-            fileProveedorManager.writeLine(proveedor);
+            FileProveedorManager.writeLine(proveedor);
 
             tableProveedores.setItems(loadTableProveedores());
             clearInputs();
@@ -166,7 +164,7 @@ public class ProveedorController {
             String ciudad = inputCiudad.getText();
 
             Proveedor proveedor = new Proveedor(indice, dni, nombre, direccion, telefono, cuil, ciudad);
-            fileProveedorManager.editLine(indice, proveedor);
+            FileProveedorManager.editLine(indice, proveedor);
             listaProveedores = loadListaProveedores();
 
             tableProveedores.setItems(loadTableProveedores());

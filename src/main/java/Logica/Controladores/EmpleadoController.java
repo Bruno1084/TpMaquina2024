@@ -56,7 +56,6 @@ public class EmpleadoController {
     private RadioButton inputAlta;
 
     // Other things
-    private final FileEmpleadoManager fileEmpleadoManager = new FileEmpleadoManager("src/main/java/Permanencia/Empleado.txt", "Empleado");
     private ArrayList<Empleado> listaEmpleados = new ArrayList<>();
     private static int indice = 0;
 
@@ -91,7 +90,7 @@ public class EmpleadoController {
 
     public ArrayList<Empleado> loadListaEmpleados(){
         ArrayList<Empleado> empleados;
-        empleados = fileEmpleadoManager.readAllLines();
+        empleados = FileEmpleadoManager.readAllLines();
 
         return empleados;
     }
@@ -154,7 +153,7 @@ public class EmpleadoController {
 
             Empleado empleado = new Empleado(id, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso, alta);
             listaEmpleados.add(empleado);
-            fileEmpleadoManager.writeLine(empleado);
+            FileEmpleadoManager.writeLine(empleado);
 
             tableEmpleados.setItems(loadTableEmpleados());
             clearInputs();
@@ -173,7 +172,7 @@ public class EmpleadoController {
             boolean alta = inputAlta.isSelected();
 
             Empleado empleado = new Empleado(indice, dni, nombre, direccion, telefono, nroLegajo, fechaIngreso, alta);
-            fileEmpleadoManager.editLine(indice, empleado);
+            FileEmpleadoManager.editLine(indice, empleado);
             listaEmpleados = loadListaEmpleados();
             tableEmpleados.setItems(loadTableEmpleados());
             clearInputs();
@@ -184,7 +183,7 @@ public class EmpleadoController {
     public void handleBtnEliminar(){
         if (!tableEmpleados.getSelectionModel().isEmpty()) {
             Empleado selectedEmpleado = tableEmpleados.getSelectionModel().getSelectedItem();
-            fileEmpleadoManager.deleteLine(selectedEmpleado.getId());
+            FileEmpleadoManager.deleteLine(selectedEmpleado.getId());
             listaEmpleados = loadListaEmpleados();
             tableEmpleados.setItems(loadTableEmpleados());
             clearInputs();
