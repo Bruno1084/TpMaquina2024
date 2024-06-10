@@ -1,10 +1,8 @@
 package Logica.Controladores;
 import Logica.Clases.Compra;
-import Logica.Controladores.ModalControladores.ModalRegistrarCompraController;
 import Utils.FileCompraManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +12,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -54,7 +51,6 @@ public class CompraController {
     private Button btnRegistrarCompra;
 
     // Other things
-    private final FileCompraManager fileCompraManager = new FileCompraManager("src/main/java/Permanencia/Compra.txt", "Compra.txt  ");
     private ArrayList<Compra> listaCompras = new ArrayList<>();
     private static int indice = 0;
 
@@ -83,7 +79,7 @@ public class CompraController {
 
     public ArrayList<Compra> loadListaCompras(){
         ArrayList<Compra> compra;
-        compra = fileCompraManager.readAllLines();
+        compra = FileCompraManager.readAllLines();
 
         return compra;
     }
@@ -136,7 +132,7 @@ public class CompraController {
 
             Compra compra = new Compra(id, fecha,idCliente, pagado, idEmpleado);
             listaCompras.add(compra);
-            fileCompraManager.writeLine(compra);
+            FileCompraManager.writeLine(compra);
 
             tableCompras.setItems(loadTableCompra());
             clearInputs();
@@ -152,7 +148,7 @@ public class CompraController {
             int idCliente = Integer.parseInt(inputCliente.getText());
 
             Compra compra = new Compra(indice, fecha, idCliente, pagado, idEmpleado);
-            fileCompraManager.editLine(indice, compra);
+            FileCompraManager.editLine(indice, compra);
             listaCompras = loadListaCompras();
             tableCompras.setItems(loadTableCompra());
             clearInputs();
@@ -163,7 +159,7 @@ public class CompraController {
     public void handleBtnEliminar(){
         if (!tableCompras.getSelectionModel().isEmpty()) {
             Compra selectedCompra = tableCompras.getSelectionModel().getSelectedItem();
-            fileCompraManager.deleteLine(selectedCompra.getId());
+            FileCompraManager.deleteLine(selectedCompra.getId());
             listaCompras = loadListaCompras();
             tableCompras.setItems(loadTableCompra());
             clearInputs();

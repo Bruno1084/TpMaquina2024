@@ -5,22 +5,18 @@ import java.util.ArrayList;
 
 
 public class FileCompraManager {
-    private String path;
-    private String fileName;
-    private File file;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
+    private static String path;
+    private static String fileName;
+    private static File file;
 
-
-    public FileCompraManager(String path, String fileName){
-        this.path = path;
-        this.fileName = fileName;
-
+    static {
+        path = "src/main/java/Permanencia/";
+        fileName = "Compra.txt";
+        file = new File(path, fileName);
         createFile();
     }
 
-    public void createFile(){
-        this.file = new File(path);
+    public static void createFile(){
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -31,7 +27,7 @@ public class FileCompraManager {
         }
     }
 
-    public String readLine(){
+    public static String readLine(){
         String line = "";
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -42,7 +38,7 @@ public class FileCompraManager {
         return line;
     }
 
-    public String[] readLineAsArray(){
+    public static String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line = bufferedReader.readLine();
@@ -55,7 +51,7 @@ public class FileCompraManager {
         return arrayLine;
     }
 
-    public ArrayList<Compra> readAllLines(){
+    public static ArrayList<Compra> readAllLines(){
         ArrayList<Compra> data = new ArrayList<>();
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -80,7 +76,35 @@ public class FileCompraManager {
         return data;
     }
 
-    public void writeAllLines(ArrayList<Compra> listaCompras){
+    public static ArrayList<Compra> readAllLinesByClient(int idSearch){
+        ArrayList<Compra> data = new ArrayList<>();
+
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+            String fileLine = bufferedReader.readLine();
+
+            while(fileLine != null){
+                String[] splitLine = fileLine.split(", ");
+
+                if (String.valueOf(idSearch).equals(splitLine[2])){
+                    int id = Integer.parseInt(splitLine[0]);
+                    String fecha = splitLine[1];
+                    int idCliente = Integer.parseInt(splitLine[2]);
+                    String pagado = splitLine[3];
+                    int idEmpleado = Integer.parseInt(splitLine[4]);
+
+                    Compra compra = new Compra(id, fecha, idCliente, pagado, idEmpleado);
+                    data.add(compra);
+                }
+                fileLine = bufferedReader.readLine();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public static void writeAllLines(ArrayList<Compra> listaCompras){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Compra comp : listaCompras){
                 bufferedWriter.write(comp.toString());
@@ -91,7 +115,7 @@ public class FileCompraManager {
         }
     }
 
-    public void writeLine(Compra compra){
+    public static void writeLine(Compra compra){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(compra.toString());
         } catch (IOException e) {
@@ -100,7 +124,7 @@ public class FileCompraManager {
         }
     }
 
-    public void editLine(int id, Compra compra){
+    public static void editLine(int id, Compra compra){
         ArrayList<Compra> listaCompras = readAllLines();
         for (int i = 0; i < listaCompras.size(); i++) {
             if (listaCompras.get(i).getId() == id) {
@@ -111,7 +135,7 @@ public class FileCompraManager {
         writeAllLines(listaCompras);
     }
 
-    public void deleteLine(int id) {
+    public static void deleteLine(int id) {
         ArrayList<Compra> listaCompras = readAllLines();
         listaCompras.removeIf(compra -> compra.getId() == id);
         writeAllLines(listaCompras);
@@ -137,19 +161,5 @@ public class FileCompraManager {
     }
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public FileReader getFileReader() {
-        return fileReader;
-    }
-    public void setFileReader(FileReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
     }
 }

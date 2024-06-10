@@ -1,5 +1,4 @@
 package Logica.Controladores.ModalControladores;
-
 import Logica.Clases.DetalleVenta;
 import Logica.Clases.Material;
 import Logica.Clases.Venta;
@@ -9,8 +8,8 @@ import Utils.FileVentaManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.util.ArrayList;
+
 
 public class ModalRegistrarVentaController {
     // Table Columns
@@ -103,7 +102,6 @@ public class ModalRegistrarVentaController {
                 indice = detalleVenta.getIdDetalleVenta();
             }
         });
-
     }
 
     public void clearDetalleInputs(){

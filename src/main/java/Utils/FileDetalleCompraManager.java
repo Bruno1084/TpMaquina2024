@@ -1,22 +1,22 @@
 package Utils;
-import Logica.Clases.DetalleVenta;
+import Logica.Clases.DetalleCompra;
 import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileDetalleVentaManager {
+public class FileDetalleCompraManager {
     private static String path;
     private static String fileName;
     private static File file;
 
     static {
         path = "src/main/java/Permanencia/";
-        fileName = "DetalleVenta.txt";
+        fileName = "DetalleCompra.txt";
         file = new File(path, fileName);
         createFile();
     }
 
-    public FileDetalleVentaManager(String path, String fileName){
+    public FileDetalleCompraManager(String path, String fileName){
         this.path = path;
         this.fileName = fileName;
         createFile();
@@ -56,14 +56,14 @@ public class FileDetalleVentaManager {
         return arrayLine;
     }
 
-    public static ArrayList<DetalleVenta> readLinesOfVenta(){
-        ArrayList<DetalleVenta> data = new ArrayList<>();
+    public static ArrayList<DetalleCompra> readLinesOfCompra(){
+        ArrayList<DetalleCompra> data = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 if (!line.trim().matches("\\d+\\{")) continue;
 
-                int idVenta = Integer.parseInt(line.trim().split("\\{")[0]);
+                int idCompra = Integer.parseInt(line.trim().split("\\{")[0]);
 
                 while (!(line = bufferedReader.readLine()).trim().equals("}")) {
                     String[] splitLine = line.trim().split(", ");
@@ -73,8 +73,8 @@ public class FileDetalleVentaManager {
                     long peso = Long.parseLong(splitLine[3].trim());
                     long precio = Long.parseLong(splitLine[4].trim());
 
-                    DetalleVenta detalleVenta = new DetalleVenta(id, idMaterial, cantidad, peso, precio, idVenta);
-                    data.add(detalleVenta);
+                    DetalleCompra detalleCompra = new DetalleCompra(id, idMaterial, cantidad, peso, precio, idCompra);
+                    data.add(detalleCompra);
                 }
             }
         } catch (IOException e) {
@@ -83,24 +83,24 @@ public class FileDetalleVentaManager {
         return data;
     }
 
-    public static void writeAllLines(ArrayList<DetalleVenta> listaDetalleVentas){
+    public static void writeAllLines(ArrayList<DetalleCompra> listaDetalleCompras){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
-            int currentIdVenta = -1;
-            for (DetalleVenta detalleVenta : listaDetalleVentas) {
-                if (detalleVenta.getIdVenta() != currentIdVenta) {
-                    if (currentIdVenta != -1) {
+            int currentIdCompra = -1;
+            for (DetalleCompra detalleCompra : listaDetalleCompras) {
+                if (detalleCompra.getIdCompra() != currentIdCompra) {
+                    if (currentIdCompra != -1) {
                         bufferedWriter.write("}\n");
                     }
-                    currentIdVenta = detalleVenta.getIdVenta();
-                    bufferedWriter.write(currentIdVenta + "{\n");
+                    currentIdCompra = detalleCompra.getIdCompra();
+                    bufferedWriter.write(currentIdCompra + "{\n");
                 }
-                bufferedWriter.write(detalleVenta.getIdDetalleVenta() + ", " +
-                        detalleVenta.getIdMaterial() + ", " +
-                        detalleVenta.getCantidad() + ", " +
-                        detalleVenta.getPeso() + ", " +
-                        detalleVenta.getPrecio() + "\n");
+                bufferedWriter.write(detalleCompra.getIdDetalleCompra() + ", " +
+                        detalleCompra.getIdMaterial() + ", " +
+                        detalleCompra.getCantidad() + ", " +
+                        detalleCompra.getPeso() + ", " +
+                        detalleCompra.getPrecio() + "\n");
             }
-            if (currentIdVenta != -1) {
+            if (currentIdCompra != -1) {
                 bufferedWriter.write("}\n");
             }
         } catch (IOException e) {
@@ -109,49 +109,49 @@ public class FileDetalleVentaManager {
         }
     }
 
-    public static void writeLine(DetalleVenta detalleVenta){
+    public static void writeLine(DetalleCompra detalleCompra){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
-            bufferedWriter.write(detalleVenta.toString());
+            bufferedWriter.write(detalleCompra.toString());
         } catch (IOException e) {
-            System.out.println("Error on FileDetalleVentaManager writeLine method");
+            System.out.println("Error on FileDetalleCompraManager writeLine method");
             e.printStackTrace();
         }
     }
 
-    public static void writeVentaWithDetails(int idVenta, ArrayList<DetalleVenta> listaDetalles){
+    public static void writeVentaWithDetails(int idCompra, ArrayList<DetalleCompra> listaDetalles){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
-            bufferedWriter.write(idVenta + "{\n");
-            for (DetalleVenta detalleVenta : listaDetalles) {
-                bufferedWriter.write(detalleVenta.toString());
+            bufferedWriter.write(idCompra + "{\n");
+            for (DetalleCompra detalleCompra : listaDetalles) {
+                bufferedWriter.write(detalleCompra.toString());
             }
             bufferedWriter.write("}\n");
         } catch (IOException e) {
-            System.out.println("Error on FileDetalleVentaManager writeVentaWithDetails method");
+            System.out.println("Error on FileDetalleCompraManager writeCompraWithDetails method");
             e.printStackTrace();
         }
     }
 
-    public static void editLine(int id, DetalleVenta detalleVenta){
-        ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
-        for (int i = 0; i < listaDetalleVenta.size(); i++) {
-            if (listaDetalleVenta.get(i).getIdDetalleVenta() == id) {
-                listaDetalleVenta.set(i, detalleVenta);
+    public static void editLine(int id, DetalleCompra detalleCompra){
+        ArrayList<DetalleCompra> listaDetalleCompra = readLinesOfCompra();
+        for (int i = 0; i < listaDetalleCompra.size(); i++) {
+            if (listaDetalleCompra.get(i).getIdDetalleCompra() == id) {
+                listaDetalleCompra.set(i, detalleCompra);
                 break;
             }
         }
-        writeAllLines(listaDetalleVenta);
+        writeAllLines(listaDetalleCompra);
     }
 
     public static void deleteLine(int id) {
-        ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
-        listaDetalleVenta.removeIf(detalleVenta -> detalleVenta.getIdDetalleVenta() == id);
-        writeAllLines(listaDetalleVenta);
+        ArrayList<DetalleCompra> listaDetalleCompra = readLinesOfCompra();
+        listaDetalleCompra.removeIf(detalleCompra -> detalleCompra.getIdDetalleCompra() == id);
+        writeAllLines(listaDetalleCompra);
     }
 
-    public static void deleteVentaGroup(int idVenta) {
-        ArrayList<DetalleVenta> listaDetalleVenta = readLinesOfVenta();
-        listaDetalleVenta.removeIf(detalleVenta -> detalleVenta.getIdVenta() == idVenta);
-        writeAllLines(listaDetalleVenta);
+    public static void deleteVentaGroup(int idCompra) {
+        ArrayList<DetalleCompra> listaDetalleCompra = readLinesOfCompra();
+        listaDetalleCompra.removeIf(detalleCompra -> detalleCompra.getIdCompra() == idCompra);
+        writeAllLines(listaDetalleCompra);
     }
 
     // Getters and Setters

@@ -4,23 +4,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class FileClienteManager implements  FileManagerUtils<Cliente>{
-    private String path;
-    private String fileName;
-    private File file;
-    private FileReader fileReader;
-    private FileWriter fileWriter;
+public class FileClienteManager{
+    private static String path;
+    private static String fileName;
+    private static File file;
 
-
-    public FileClienteManager(String path, String fileName){
-        this.path = path;
-        this.fileName = fileName;
-
+    static {
+        path = "src/main/java/Permanencia/";
+        fileName = "Cliente.txt";
+        file = new File(path, fileName);
         createFile();
     }
 
-    public void createFile(){
-        this.file = new File(path);
+    public static void createFile(){
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -31,7 +27,7 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         }
     }
 
-    public String readLine(){
+    public static String readLine(){
         String line = "";
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -42,7 +38,7 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         return line;
     }
 
-    public String[] readLineAsArray(){
+    public static String[] readLineAsArray(){
         String[] arrayLine = {};
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String line = bufferedReader.readLine();
@@ -55,7 +51,7 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         return arrayLine;
     }
 
-    public ArrayList<Cliente> readAllLines(){
+    public static ArrayList<Cliente> readAllLines(){
         ArrayList<Cliente> data = new ArrayList<>();
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
@@ -82,7 +78,7 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         return data;
     }
 
-    public void writeAllLines(ArrayList<Cliente> listaClientes){
+    public static void writeAllLines(ArrayList<Cliente> listaClientes){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, false))) {
             for (Cliente cli : listaClientes){
                 bufferedWriter.write(cli.toString());
@@ -93,7 +89,7 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         }
     }
 
-    public void writeLine(Cliente cliente){
+    public static void writeLine(Cliente cliente){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
             bufferedWriter.write(cliente.toString());
         } catch (IOException e) {
@@ -102,7 +98,7 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         }
     }
 
-    public void editLine(int id, Cliente cliente){
+    public static void editLine(int id, Cliente cliente){
         ArrayList<Cliente> listaClientes = readAllLines();
         for (int i = 0; i < listaClientes.size(); i++) {
             if (listaClientes.get(i).getId() == id) {
@@ -113,9 +109,20 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
         writeAllLines(listaClientes);
     }
 
-    public void deleteLine(int id) {
+    public static void deleteLine(int id) {
         ArrayList<Cliente> listaClientes = readAllLines();
         listaClientes.removeIf(cliente -> cliente.getId() == id);
+        writeAllLines(listaClientes);
+    }
+
+    public static void incrementCompras(int idCliente) {
+        ArrayList<Cliente> listaClientes = readAllLines();
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getId() == idCliente) {
+                cliente.setCantCompras(cliente.getCantCompras() + 1);
+                break;
+            }
+        }
         writeAllLines(listaClientes);
     }
 
@@ -140,19 +147,5 @@ public class FileClienteManager implements  FileManagerUtils<Cliente>{
     }
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public FileReader getFileReader() {
-        return fileReader;
-    }
-    public void setFileReader(FileReader fileReader) {
-        this.fileReader = fileReader;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
     }
 }

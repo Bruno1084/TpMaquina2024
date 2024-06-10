@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,27 +15,47 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Logica.Controladores.ClienteController">
     <VBox alignment="CENTER" layoutX="191.0" layoutY="90.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-            <Text layoutX="23.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente">
-            <font>
-               <Font name="System Bold" size="18.0" />
-            </font></Text>
-            <Text layoutX="23.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni:" />
-            <TextField fx:id="inputDni" layoutX="50.0" layoutY="63.0" />
-            <Text layoutX="340.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
-            <TextField fx:id="inputNombre" layoutX="398.0" layoutY="63.0" />
-            <Text layoutX="24.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" />
-            <TextField fx:id="inputDireccion" layoutX="82.0" layoutY="138.0" />
-            <Text layoutX="322.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
-            <TextField fx:id="inputTelefono" layoutX="377.0" layoutY="138.0" />
-            <Button fx:id="btnAniadir" layoutX="18.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
-            <Button fx:id="btnEliminar" layoutX="146.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
-            <Button fx:id="btnEditar" layoutX="82.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
-         <RadioButton fx:id="inputAlta" layoutX="222.0" layoutY="265.0" mnemonicParsing="false" text="Dar Alta" />
-         <Label layoutX="29.0" layoutY="197.0" text="Compras:" />
-         <TextField fx:id="inputCantCompras" layoutX="82.0" layoutY="193.0" prefHeight="25.0" prefWidth="149.0" />
-        </Pane>
-        <TableView fx:id="tableClientes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+              <Pane prefHeight="328.0" prefWidth="457.0" HBox.hgrow="ALWAYS">
+                  <Text layoutX="23.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Text>
+                  <Text layoutX="33.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni:" />
+                  <TextField fx:id="inputDni" layoutX="85.0" layoutY="72.0" prefHeight="25.0" prefWidth="149.0" />
+                  <Text layoutX="28.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                  <TextField fx:id="inputNombre" layoutX="82.0" layoutY="105.0" prefHeight="25.0" prefWidth="149.0" />
+                  <Text layoutX="24.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" />
+                  <TextField fx:id="inputDireccion" layoutX="82.0" layoutY="138.0" />
+                  <Text layoutX="26.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono:" />
+                  <TextField fx:id="inputTelefono" layoutX="82.0" layoutY="172.0" />
+                  <Button fx:id="btnAniadir" layoutX="18.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleBtnAniadir" text="Añadir" />
+                  <Button fx:id="btnEliminar" layoutX="140.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleBtnEliminar" text="Eliminar" />
+                  <Button fx:id="btnEditar" layoutX="82.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleBtnEditar" text="Editar" />
+               <RadioButton fx:id="inputAlta" layoutX="22.0" layoutY="243.0" mnemonicParsing="false" text="Dar Alta" />
+               <Label layoutX="19.0" layoutY="210.0" text="Compras:" />
+               <TextField fx:id="inputCantCompras" layoutX="82.0" layoutY="206.0" prefHeight="25.0" prefWidth="149.0" />
+              </Pane>
+            <AnchorPane prefHeight="473.0" prefWidth="492.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="tableCompras" layoutX="119.0" layoutY="44.0" prefHeight="200.0" prefWidth="431.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="columnIdCompra" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="columnFechaCompra" prefWidth="75.0" text="Fecha" />
+                        <TableColumn fx:id="columnIdEmpleado" prefWidth="75.0" text="Empleado" />
+                        <TableColumn fx:id="columnPagado" prefWidth="75.0" text="Pagado" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+        <TableView fx:id="tableClientes" prefHeight="417.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="columnID" editable="false" text="ID" />
                 <TableColumn fx:id="columnDni" text="Dni" />

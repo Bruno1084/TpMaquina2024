@@ -1,6 +1,8 @@
 package Logica.Controladores;
 import Logica.Clases.Cliente;
+import Logica.Clases.Compra;
 import Utils.FileClienteManager;
+import Utils.FileCompraManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 
 
 public class ClienteController {
-    // Table columns and view
+    // Table clientes and view
     @FXML
     private TableView<Cliente> tableClientes;
     @FXML
@@ -27,6 +29,18 @@ public class ClienteController {
     private TableColumn<Cliente, Boolean> columnAlta;
     @FXML
     private TableColumn<Cliente, Integer> columnCantCompras;
+
+    // Table compras and columns
+    @FXML
+    private TableView<Compra> tableCompras;
+    @FXML
+    private TableColumn<Compra, Integer> columnIdCompra;
+    @FXML
+    private TableColumn<Compra, String> columnFechaCompra;
+    @FXML
+    private TableColumn<Compra, Integer> columnIdEmpleado;
+    @FXML
+    private TableColumn<Compra, String> columnPagado;
 
     // Form inputs
     @FXML
@@ -51,12 +65,12 @@ public class ClienteController {
     private RadioButton inputAlta;
 
     // Other things
-    private final FileClienteManager fileClienteManager = new FileClienteManager("src/main/java/Permanencia/Cliente.txt", "Cliente");
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
     private static int indice = 0;
 
 
     public void initialize(){
+        // Set columns from table Clientes
         columnID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         columnDni.setCellValueFactory(new PropertyValueFactory<>("Dni"));
         columnNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
@@ -64,6 +78,12 @@ public class ClienteController {
         columnTelefono.setCellValueFactory(new PropertyValueFactory<>("Telefono"));
         columnAlta.setCellValueFactory(new PropertyValueFactory<>("Alta"));
         columnCantCompras.setCellValueFactory(new PropertyValueFactory<>("CantCompras"));
+
+        // Set columns from table Compras
+        columnIdCompra.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        columnFechaCompra.setCellValueFactory(new PropertyValueFactory<>("Fecha"));
+        columnIdEmpleado.setCellValueFactory(new PropertyValueFactory<>("IdEmpleado"));
+        columnPagado.setCellValueFactory(new PropertyValueFactory<>("Pagada"));
 
         listaClientes = loadListaClientes();
         tableClientes.setItems(loadTableClientes());
@@ -79,13 +99,14 @@ public class ClienteController {
                 inputCantCompras.setText(String.valueOf(cliente.getCantCompras()));
 
                 indice = cliente.getId();
+                loadTableCompras();
             }
         });
     }
 
     public ArrayList<Cliente> loadListaClientes(){
         ArrayList<Cliente> cliente;
-        cliente = fileClienteManager.readAllLines();
+        cliente = FileClienteManager.readAllLines();
 
         return cliente;
     }
@@ -107,6 +128,13 @@ public class ClienteController {
         });
 
         return data;
+    }
+
+    public void loadTableCompras(){
+        ArrayList<Compra> compras = FileCompraManager.readAllLinesByClient(indice);
+        ObservableList<Compra> data = FXCollections.observableArrayList();
+        data.addAll(compras);
+        tableCompras.setItems(data);
     }
 
     public Cliente getLastCliente(){
@@ -144,7 +172,7 @@ public class ClienteController {
 
             Cliente cliente = new Cliente(id, dni, nombre, direccion, telefono, alta, cantCompra);
             listaClientes.add(cliente);
-            fileClienteManager.writeLine(cliente);
+            FileClienteManager.writeLine(cliente);
 
             tableClientes.setItems(loadTableClientes());
             clearInputs();
@@ -162,7 +190,7 @@ public class ClienteController {
             int cantCompras = Integer.parseInt(inputCantCompras.getText());
 
             Cliente cliente = new Cliente(indice, dni, nombre, direccion, telefono, alta, cantCompras);
-            fileClienteManager.editLine(indice, cliente);
+            FileClienteManager.editLine(indice, cliente);
             listaClientes = loadListaClientes();
             tableClientes.setItems(loadTableClientes());
             clearInputs();
@@ -173,7 +201,7 @@ public class ClienteController {
     public void handleBtnEliminar(){
         if (!tableClientes.getSelectionModel().isEmpty()) {
             Cliente selectedCliente = tableClientes.getSelectionModel().getSelectedItem();
-            fileClienteManager.deleteLine(selectedCliente.getId());
+            FileClienteManager.deleteLine(selectedCliente.getId());
             listaClientes = loadListaClientes();
             tableClientes.setItems(loadTableClientes());
             clearInputs();
