@@ -124,6 +124,7 @@ public class ModalRegistrarCompraController {
         inputCantidad.setText("");
         inputPrecio.setText("");
         inputPeso.setText("");
+        inputMaterial.setText("");
     }
 
     public void clearCompraInputs(){
@@ -151,7 +152,6 @@ public class ModalRegistrarCompraController {
             contextMaterial.getItems().add(customMenuItem);
         }
         contextMaterial.show(inputMaterial, Side.BOTTOM, 0, 0);
-
     }
 
     public void handleInputIdCliente(){

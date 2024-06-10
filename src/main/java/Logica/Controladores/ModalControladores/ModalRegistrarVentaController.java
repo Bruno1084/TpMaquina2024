@@ -1,11 +1,13 @@
 package Logica.Controladores.ModalControladores;
-import Logica.Clases.DetalleVenta;
-import Logica.Clases.Material;
-import Logica.Clases.Venta;
+import Logica.Clases.*;
+import Utils.CustomMenuItem;
 import Utils.FileDetalleVentaManager;
 import Utils.FileMaterialManager;
+import Utils.FileProveedorManager;
 import Utils.FileVentaManager;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
@@ -35,6 +37,11 @@ public class ModalRegistrarVentaController {
     private TextField inputPrecio;
     @FXML
     private TextField inputPeso;
+    @FXML
+    private TextField inputMaterial;
+    @FXML
+    private ContextMenu contextMaterial;
+
 
     // Venta object inputs
     @FXML
@@ -47,6 +54,10 @@ public class ModalRegistrarVentaController {
     private TextField inputDespachado;
     @FXML
     private TextField inputPrecioTotal;
+    @FXML
+    private ContextMenu contextIdProveedor;
+
+
 
     // Buttons
     @FXML
@@ -57,6 +68,7 @@ public class ModalRegistrarVentaController {
     // List
     private ArrayList<Venta> listaVentas = FileVentaManager.readAllLines();
     private ArrayList<Material> listaMaterial = FileMaterialManager.readAllLines();
+    private ArrayList<Proveedor> listaProveedor = FileProveedorManager.readAllLines();
     private ArrayList<DetalleVenta> listaDetalleVentas = new ArrayList<>();
     private static int idDetalle = 1;
     private static int indice = 0;
@@ -119,6 +131,45 @@ public class ModalRegistrarVentaController {
         tableDetalleVentas.getItems().clear();
     }
 
+    @FXML
+    public void handleInputMaterial(){
+        contextMaterial.getItems().clear();
+
+        for(Material material : listaMaterial){
+            Utils.CustomMenuItem customMenuItem = new CustomMenuItem(material.getNombre(), material);
+
+            customMenuItem.setOnAction(event -> {
+                inputIdMaterial.setText(String.valueOf(material.getId()));
+                inputPrecio.setText(String.valueOf(material.getPrecioCompra()));
+                inputMaterial.setText(material.getNombre());
+            });
+            contextMaterial.getItems().add(customMenuItem);
+        }
+        contextMaterial.show(inputMaterial, Side.BOTTOM, 0, 0);
+    }
+
+    @FXML
+    public void handleInputIdProveedor(){
+        contextIdProveedor.getItems().clear();
+
+        for(Proveedor proveedor : listaProveedor){
+            CustomMenuItem customMenuItem = new CustomMenuItem(String.valueOf(proveedor.getId()), proveedor);
+
+            customMenuItem.setOnAction(event -> {
+                inputIdProveedor.setText(String.valueOf(proveedor.getId()));
+                inputProveedor.setText(proveedor.getNombre());
+            });
+            contextIdProveedor.getItems().add(customMenuItem);
+        }
+        contextIdProveedor.show(inputIdProveedor, Side.BOTTOM, 0, 0);
+    }
+
+    @FXML
+    public void handleCalcularPrecio(){
+        ObservableList<DetalleVenta> data = tableDetalleVentas.getItems();
+        long precioFinal = data.stream().mapToLong(material -> (long) (material.getCantidad() * material.getPeso() * material.getPrecio())).sum();
+        inputPrecioTotal.setText(String.valueOf(precioFinal));
+    }
 
     @FXML
     public void handleBtnAgregarMaterial(){
@@ -133,6 +184,7 @@ public class ModalRegistrarVentaController {
         tableDetalleVentas.getItems().add(detalleVenta);
 
         clearDetalleInputs();
+        handleCalcularPrecio();
     }
 
     @FXML
