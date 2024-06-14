@@ -21,7 +21,14 @@
                     <Font size="14.0" />
                 </font>
             </Text>
-            <TextField fx:id="inputIdMaterial" layoutX="96.0" layoutY="20.0" prefHeight="25.0" prefWidth="84.0" />
+            <TextField fx:id="inputIdMaterial" layoutX="96.0" layoutY="20.0" onKeyPressed="#handleInputIdMaterial" prefHeight="25.0" prefWidth="84.0">
+            <contextMenu>
+               <ContextMenu fx:id="contextIdMaterial">
+                 <items>
+                   <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                 </items>
+               </ContextMenu>
+            </contextMenu></TextField>
             <Text layoutX="22.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad:" underline="true">
                 <font>
                     <Font size="14.0" />
@@ -52,7 +59,7 @@
                <Font size="14.0" />
             </font>
          </Text>
-         <TextField fx:id="inputMaterial" layoutX="348.0" layoutY="22.0" onKeyReleased="#handleInputMaterial" prefHeight="25.0" prefWidth="120.0">
+         <TextField fx:id="inputMaterial" layoutX="348.0" layoutY="22.0" onKeyPressed="#handleInputMaterial" prefHeight="25.0" prefWidth="120.0">
             <contextMenu>
                <ContextMenu fx:id="contextMaterial">
                  <items>
@@ -90,8 +97,8 @@
                     <Font size="14.0" />
                 </font>
             </Button>
-            <TextField fx:id="inputIdEmpleado" layoutX="41.0" layoutY="53.0" onKeyReleased="#handleInputIdEmpleado" prefHeight="25.0" prefWidth="32.0" />
-            <TextField fx:id="inputIdCliente" layoutX="40.0" layoutY="24.0" onKeyReleased="#handleInputIdCliente" prefHeight="25.0" prefWidth="34.0" />
+            <TextField fx:id="inputIdEmpleado" layoutX="41.0" layoutY="53.0" onKeyPressed="#handleInputIdEmpleado" prefHeight="25.0" prefWidth="32.0" />
+            <TextField fx:id="inputIdCliente" layoutX="40.0" layoutY="24.0" onKeyPressed="#handleInputIdCliente" prefHeight="25.0" prefWidth="34.0" />
             <TextField fx:id="inputFechaVenta" layoutX="439.0" layoutY="15.0" prefHeight="25.0" prefWidth="114.0" />
             <Text layoutX="375.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pagado:">
                 <font>

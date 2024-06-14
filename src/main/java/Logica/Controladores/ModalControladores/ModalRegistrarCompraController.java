@@ -37,6 +37,8 @@ public class ModalRegistrarCompraController {
     @FXML
     private TextField inputPeso;
     @FXML
+    private ContextMenu contextIdMaterial;
+    @FXML
     private ContextMenu contextMaterial;
 
     // Compra object inputs
@@ -135,6 +137,23 @@ public class ModalRegistrarCompraController {
         inputPrecioTotal.setText("");
 
         tableDetalleCompra.getItems().clear();
+    }
+
+    @FXML
+    public void handleInputIdMaterial(){
+        contextIdMaterial.getItems().clear();
+
+        for(Material material : listaMaterial){
+            CustomMenuItem customMenuItem = new CustomMenuItem(String.valueOf(material.getId()), material);
+
+            customMenuItem.setOnAction(event -> {
+                inputMaterial.setText(material.getNombre());
+                inputIdMaterial.setText(String.valueOf(material.getId()));
+                inputPrecio.setText(String.valueOf(material.getPrecioCompra()));
+            });
+            contextIdMaterial.getItems().add(customMenuItem);
+        }
+        contextIdMaterial.show(inputIdMaterial, Side.BOTTOM, 0, 0);
     }
 
     @FXML
